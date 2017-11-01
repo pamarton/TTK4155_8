@@ -15,7 +15,7 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
-#include "uart.h"
+
 #include "../../common_library/i_o.h"
 #include "input_conversion.h"//REMOVE THIS AND THE PRINTF IN THE button_interrupts.c FILE
 #include "menu.h"

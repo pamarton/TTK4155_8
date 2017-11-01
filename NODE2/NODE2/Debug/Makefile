@@ -42,7 +42,8 @@ C_SRCS +=  \
 ../../../common_library/MCP2515_driver.c \
 ../../../common_library/SPI.c \
 ../../../common_library/uart.c \
-../NODE2.c
+../NODE2.c \
+../pwm.c
 
 
 PREPROCESSING_SRCS += 
@@ -57,7 +58,8 @@ i_o.o \
 MCP2515_driver.o \
 SPI.o \
 uart.o \
-NODE2.o
+NODE2.o \
+pwm.o
 
 OBJS_AS_ARGS +=  \
 can.o \
@@ -65,7 +67,8 @@ i_o.o \
 MCP2515_driver.o \
 SPI.o \
 uart.o \
-NODE2.o
+NODE2.o \
+pwm.o
 
 C_DEPS +=  \
 can.d \
@@ -73,7 +76,8 @@ i_o.d \
 MCP2515_driver.d \
 SPI.d \
 uart.d \
-NODE2.d
+NODE2.d \
+pwm.d
 
 C_DEPS_AS_ARGS +=  \
 can.d \
@@ -81,7 +85,8 @@ i_o.d \
 MCP2515_driver.d \
 SPI.d \
 uart.d \
-NODE2.d
+NODE2.d \
+pwm.d
 
 OUTPUT_FILE_PATH +=NODE2.elf
 
@@ -97,6 +102,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

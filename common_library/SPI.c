@@ -16,6 +16,7 @@ void SPI_initialize(void){
 		DDRB |= (1<<PB0);
 		SPCR |= (1<<SPR0);
 	#endif
+	
 	/* Set MOSI and SCK output, all others input */
 	DDRB |= (1<<SPI_MOSI)|(1<<SPI_SCK)|(1<<SPI_SS); //PB0 is not connected, but has to be set to output in order for SPI-comm to work
 	/* Enable SPI, Master, set clock rate fck/16 */

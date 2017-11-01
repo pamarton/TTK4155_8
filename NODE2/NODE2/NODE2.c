@@ -11,12 +11,28 @@
 #include	<avr/interrupt.h>
 #include	"../../common_library/CAN.h"
 void init_all(void);
-#include <avr/delay.h>
+#include	<util/delay.h>
+#include "pwm.h"
 int main(void)
 {
+	
+	
 	init_all();
-	printf("test");
-    int8_t temp[8] = {1,2,3,4,5,6,7,8};
+	
+	pwm_init(20);
+	
+	pwm_set_pulse_width(1);
+	while(1){
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	int8_t temp[8] = {1,2,3,4,5,6,7,8};
     int8_t *data = temp;
 
     uint8_t sendCAN = 0;
@@ -40,6 +56,6 @@ void init_all(void){
 	cli();
 	init_UART();
 	CAN_initialize();
-	
+	printf("Program initialized\n");
 	sei();
 }

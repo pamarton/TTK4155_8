@@ -20,12 +20,12 @@ void initalize_interrupts(void){
 	BIT_ON(GICR, INT1);
 }
 
-
+#include "../../common_library/uart.h"
 ISR(INT0_vect){//interrupt button Right
-	//printf("Right button pressed, printing values:\t\t");
 	//printf("X: %i\tY: %i\tL: %i\tR: %i\n",read_control_input('X'),read_control_input('Y'),read_control_input('L'),read_control_input('R'));//REMOVE THIS AND THE #INCLUDE "input_convercions.h" in button_interrupts.h
 	menu_right_button_flag();//sets the interupt flag
 }
+
 ISR(INT1_vect){//interrupt button Left
 	menu_left_button_flag();//sets the interrupt flag
 }

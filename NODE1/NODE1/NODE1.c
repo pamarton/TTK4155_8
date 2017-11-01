@@ -24,7 +24,10 @@ int main(void)
 	int8_t *data = temp;
 
     uint8_t sendCAN = 1;
-
+	sram_write_int(12495);
+	while(1){
+		sram_push();
+	}
     while(1){
 	    if(sendCAN){
 		    

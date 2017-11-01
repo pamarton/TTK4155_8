@@ -35,7 +35,7 @@
 	#define		SPI_MOSI		PB2
 	#define		SPI_MISO		PB3
 	#define		SPI_SCK			PB1
-	#define		SPI_SSInit		PB0
+//	#define		SPI_SSInit		PB0
 #endif
 
 //------------------------------------------//
