@@ -43,6 +43,8 @@
 	#define F_CPU 16000000	// clock frequency in Hz
 #endif
 
+#define UART_ENABLE 0
+
 //------------------------------------------//
 //	DEFINITIONS FOR THE ADC					//
 //------------------------------------------//

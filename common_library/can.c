@@ -33,8 +33,10 @@ void CAN_initialize(void){
 	// Set up interrupts.
 	CAN_interrupt_setup();
 	
-	printf("MCP_CANSTAT: %i\n", MCP2515_read(MCP_CANSTAT));//comment out later
-	printf("CAN initialized.\n\n");
+	#if UART_ENABLE
+		printf("MCP_CANSTAT: %i\n", MCP2515_read(MCP_CANSTAT));//comment out later
+		printf("CAN initialized.\n\n");
+	#endif
 }
 
 CAN_message_t* CAN_message_receive(void){						// What does this step do //NOT NECCECARY, but if we want to reference the recieved data from another part of the program this is necceccary
@@ -50,7 +52,7 @@ void CAN_construct_message(int id, uint8_t length){
 }
 
 	//array of int8_t as input (we chose int8_t over uint8_t so that we can send negative values
-void CAN_message_send(int8_t *data,uint8_t TXn){
+void CAN_message_send(uint8_t *data,uint8_t TXn){
 	for(uint8_t i = 0; i < CAN_send_buffer.length; i++){
 		CAN_send_buffer.data[i] = data[i];
 	}
@@ -69,15 +71,17 @@ void CAN_send_byte(CAN_message_t* message,uint8_t TXn){
 	//MCP2515_request_to_send(MCP_MERRF+(1<<n));
 	MCP2515_request_to_send(TXn);
 	CAN_transmission_complete(TXn);
-	printf("\nSENT MESSAGE:");
-	CAN_print(CAN_send_buffer);
+	#if UART_ENABLE
+		printf("\nSENT MESSAGE:");
+		CAN_print(CAN_send_buffer);
+	#endif
 }
 
 uint8_t CAN_read(uint8_t adr){
 	return MCP2515_read(adr);
 }
 
-void CAN_data_receive(void) {
+uint8_t CAN_data_receive(void) {
 	if(receive_flag){
 		receive_flag = 0;
 		uint8_t n = CAN_reception_complete();
@@ -88,9 +92,13 @@ void CAN_data_receive(void) {
 				CAN_receive_buffer.data[m] =  CAN_read(RXBnDM + m);
 			}
 		}
-		printf("\nRECIVED MESSAGE:");
-		CAN_print(CAN_receive_buffer);
+		#if UART_ENABLE
+			printf("\nRECIVED MESSAGE:");
+			CAN_print(CAN_receive_buffer);
+		#endif
+		return 1;
 	}
+	return 0;
 }
 
 void CAN_print(CAN_message_t message){
@@ -138,7 +146,7 @@ void CAN_interrupt_setup(void){
 }
 
 int8_t CAN_reception_complete(void){
-	printf("MCP_CANINTF = %i",MCP2515_read(MCP_CANINTF));
+	//printf("MCP_CANINTF = %i",MCP2515_read(MCP_CANINTF));
 	
 	// Wait for data to be loaded into either receive buffer.
 	while(!((MCP2515_read(MCP_CANINTF) & MCP_RX0IF) | (MCP2515_read(MCP_CANINTF) & MCP_RX1IF)));

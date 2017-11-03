@@ -72,7 +72,9 @@ void MCP2515_bit_modify(uint8_t adr, uint8_t mask, int data){
 
 
 void MCP2515_reset(void){
-	printf("Resetting MCP2515\n");
+	#if UART_ENABLE
+		printf("Resetting MCP2515\n");
+	#endif
 	SPI_select();
 	SPI_send(MCP_RESET);
 	SPI_deselect();

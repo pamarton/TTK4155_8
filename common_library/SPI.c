@@ -23,7 +23,9 @@ void SPI_initialize(void){
 	SPCR |= (1<<SPE)|(1<<MSTR);
 		
 	SPI_deselect();
-	printf("SPI communication initialized.\n");
+	#if UART_ENABLE
+		printf("SPI communication initialized.\n");
+	#endif
 }
 
 
