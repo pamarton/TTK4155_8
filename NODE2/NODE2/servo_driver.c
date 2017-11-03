@@ -8,16 +8,17 @@
 
 void servo_init(void){
 	pwm_init(20);
+	servo_set(0);
 }
 
-#define PULSE_MAX 2.1 //MS
-#define PULSE_MIN 0.9 //MS
 int servo_set(int value){
-	if(value >= -100 && value <= 100){
-		double pulse_width = (PULSE_MIN + (PULSE_MAX - PULSE_MIN) * (((double)value+100)/200));
-		if(pulse_width >= 0.9 && pulse_width <= 2.1){
+	if(value >= CONTROL_INPUT_MIN && value <= CONTROL_INPUT_MAX){
+		double pulse_width = (PULSE_WIDTH_MIN + (PULSE_WIDTH_MAX - PULSE_WIDTH_MIN) * ((CONTROL_INPUT_MAX - (double)value)/(CONTROL_INPUT_MAX - CONTROL_INPUT_MIN)));
+		if(pulse_width >= PULSE_WIDTH_MIN && pulse_width <= PULSE_WIDTH_MAX){//UNNECCECARY, BUT STAY SAFE
 			pwm_set_pulse_width(pulse_width);
-			printf("%i",(int)(100*pulse_width));
+			#if UART_ENABLE
+				printf("%i",(int)(100*pulse_width));
+			#endif
 			return 1;
 		}else{
 			return 0;

@@ -11,7 +11,7 @@
 #include	<avr/interrupt.h>
 #include	"../../common_library/CAN.h"
 #include	<util/delay.h>
-#include	"pwm.h"
+#include	"servo_driver.h"
 
 void init_all(void);
 
@@ -20,43 +20,21 @@ int main(void){
 	
 	
 	
-	servo_init(20);
-	servo_set(-100);
-	_delay_ms(100);
-
-	while(1){
-		for (int i = -100; i <= 100; i++)
-		{
-			servo_set(i);
-			_delay_ms(10);
-		}
-		for (int i = 100; i >= -100; i--)
-		{
-			servo_set(i);
-			_delay_ms(10);
-		}
-	}
-	
+	servo_init();
 	
 	int8_t temp[8] = {1,2,3,4,5,6,7,8};
 	int8_t *data = temp;
 
 	uint8_t sendCAN = 0;
-
-	while(1){
+	 while(1){
 		if(sendCAN){
-			data[7]++;
 			CAN_message_send(data,0);
-			_delay_ms(-10);
+			data[7]--;
 		}
-		
-		
-		if(~sendCAN){
-			CAN_data_receive();
-		}
-	}
-	
-	
+		if(CAN_data_receive()){
+			servo_set(CAN_message_receive()->data[0]);
+		 }
+	 }
     return 0;
 }
 
@@ -67,7 +45,8 @@ void init_all(void){
 	CAN_initialize();
 	
 	
-	
-	printf("Program initialized\n");
+	#if UART_ENABLE
+		printf("Program initialized\n");
+	#endif
 	sei();
 }
