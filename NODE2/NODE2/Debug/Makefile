@@ -42,6 +42,7 @@ C_SRCS +=  \
 ../../../common_library/MCP2515_driver.c \
 ../../../common_library/SPI.c \
 ../../../common_library/uart.c \
+../servo_driver.c \
 ../NODE2.c \
 ../pwm.c
 
@@ -58,6 +59,7 @@ i_o.o \
 MCP2515_driver.o \
 SPI.o \
 uart.o \
+servo_driver.o \
 NODE2.o \
 pwm.o
 
@@ -67,6 +69,7 @@ i_o.o \
 MCP2515_driver.o \
 SPI.o \
 uart.o \
+servo_driver.o \
 NODE2.o \
 pwm.o
 
@@ -76,6 +79,7 @@ i_o.d \
 MCP2515_driver.d \
 SPI.d \
 uart.d \
+servo_driver.d \
 NODE2.d \
 pwm.d
 
@@ -85,6 +89,7 @@ i_o.d \
 MCP2515_driver.d \
 SPI.d \
 uart.d \
+servo_driver.d \
 NODE2.d \
 pwm.d
 
@@ -102,6 +107,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

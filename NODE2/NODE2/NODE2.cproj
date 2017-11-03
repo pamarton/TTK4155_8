@@ -159,6 +159,12 @@
       <SubType>compile</SubType>
       <Link>uart.h</Link>
     </Compile>
+    <Compile Include="servo_driver.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="servo_driver.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="NODE2.c">
       <SubType>compile</SubType>
     </Compile>

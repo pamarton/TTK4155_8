@@ -6,10 +6,12 @@
  */ 
 
 #include "pwm.h"
+#include "../../common_library/common.h"
 #include "../../common_library/i_o.h"
+#include "../../common_library/uart.h"
 uint8_t FLAG_refresh_screen;
 
-void pwm_init(int period){	//	Function for initilization of the timers
+void pwm_init(double period){	//	Function for initilization of the timers. Period is given in ms
 	//Enable output at port E3
 	DDRE |= (1 << PE3);
 	
@@ -26,17 +28,17 @@ void pwm_init(int period){	//	Function for initilization of the timers
 	TCCR3B |= (1<<CS32) | (1<<CS30);
 	TCCR3B &= ~(1<<CS31);
 	
-	// Define TOP. Compare Table 17.2.
+	// Define TOP. Compare Table 17.2.				CHECK THIS DIRK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	pwm_set_period(period);
 	
-	int TOP = 1000;
-	int N = 1024;
-	
-	ICR3 = F_CPU / N / (1 + TOP) / period;
-	
-	
+
 	//ICR3 = F_CPU/128/2;
 }
 
-void pwm_set_pulse_width(int val){
-	OCR3A = val;
+void pwm_set_pulse_width(double val){//vel is given in nano-seconds
+	OCR3A = (int)(SCALAR_MS * val);
+}
+
+void pwm_set_period(double period){
+	ICR3 = (int)(SCALAR_MS * period);
 }

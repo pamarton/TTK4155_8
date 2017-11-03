@@ -12,6 +12,8 @@
 
 ..\..\common_library\uart.c
 
+servo_driver.c
+
 NODE2.c
 
 pwm.c

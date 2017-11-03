@@ -17,10 +17,19 @@
 #include <avr/interrupt.h>
 
 //------------------------------------------//
+//	DEFINITIONS								//
+//------------------------------------------//
+
+#define FREQ_MS 1000//Frequency of a milli-second 
+#define PWM_PRESCALER 1024//Prescaler of the pwm
+#define SCALAR_MS (double)(F_CPU/FREQ_MS)/PWM_PRESCALER//Number the timer count to each milli-second
+
+//------------------------------------------//
 //	DECLARATIONS							//
 //------------------------------------------//
 
-void pwm_init(int period);	//	Function for initialization of the timers 
-
+void pwm_init(double period);	//	Function for initialization of the timers 
+void pwm_set_period(double period); //	Function for setting period of the pwm
+void pwm_set_pulse_width(double period);//	Function for setting the pulse width of the pwm
 
 #endif /* PWM_H_ */
