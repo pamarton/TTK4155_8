@@ -171,6 +171,12 @@
     <Compile Include="button_interrupts.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="flappy_pixel.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="flappy_pixel.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="font.h">
       <SubType>compile</SubType>
     </Compile>

@@ -76,7 +76,8 @@ void initialize_menu(void){
 	current_selected = &mainmenu_0;
 	
 }
-int abc = 0;
+
+int8_t navigation_counter = 0;
 void menu_update(void){
 	if(navigate_menu()){ //if something is selected this is true, else the screen updates
 		
@@ -103,13 +104,14 @@ void menu_update(void){
 	}
 	
 	if(timer_check_flag()){//a timer with frequency of 60Hz ensures a framerate of 60Hz
+		navigation_counter++;
 		sram_push();
 		timer_disable_flag();
-		sram_scroll_data(7,1);
+		sram_scroll_line(7,1);
 	}
 }
 
-int y_lock = 0;
+
 
 int navigate_menu(void){
 	/*int joystick_reading_y = read_control_input('Y');
@@ -126,31 +128,28 @@ int navigate_menu(void){
 	int joystick_reading = read_control_input('Y');
 	
 	// Navigate up.
-	if(joystick_reading > NAVIGATION_TRHESHOLD && y_lock <= NAVIGATION_TRHESHOLD){
+	if(joystick_reading > NAVIGATION_TRHESHOLD && navigation_counter >= NAVIGATION_COUNTER_MAX){
 		for(int i = 0; i < current_selected->n_sib-1; i++){
 			current_selected = current_selected->ptr_sib_down;
 		}
-		y_lock = RANGE_MAX;
-		
-	}else if (joystick_reading < -NAVIGATION_TRHESHOLD && y_lock >= -NAVIGATION_TRHESHOLD)
+		navigation_counter = 0;
+	}else if (joystick_reading < -NAVIGATION_TRHESHOLD && navigation_counter >= NAVIGATION_COUNTER_MAX)
 	{
 		current_selected = current_selected->ptr_sib_down;
-		y_lock = RANGE_MIN;
+		navigation_counter = 0;
 		// No navigation input on y-axis.
 	}else if(joystick_reading < NAVIGATION_TRHESHOLD && joystick_reading > -NAVIGATION_TRHESHOLD){
-		y_lock = 0;
+		navigation_counter = NAVIGATION_COUNTER_MAX - 1;
 	}
-	if (right_button_flag == 1)
+	if (check_flag_right())
 	{
-		right_button_flag = 0;
 		if(current_selected->ptr_child != NULL){
 			current_head = current_selected->ptr_child;
 			current_selected = current_selected->ptr_child;
 		}else{
 			menu_function_selected();
 		}
-	}else if (left_button_flag == 1){
-		left_button_flag = 0;
+	}else if (check_flag_left()){
 		if (current_selected->ptr_parent != NULL){
 			current_head = current_head->ptr_parent;
 			current_selected = current_selected->ptr_parent;
@@ -192,11 +191,11 @@ void menu_set_contrast(void){
 	strcpy_P(temp,btn_1);
 	sram_write_string(temp);
 	sram_push();
-	while (right_button_flag == 0){	
+	while (!check_flag_right()){
 		write_c(0x81);
 		write_c(readADC(3)/2);
 	}
-	right_button_flag = 0;
+	
 }
 
 
@@ -221,10 +220,9 @@ void menu_calibrate_joystick(void){
 	strcpy_P(temp,btn_1);
 	sram_write_string(temp);
 	sram_push();
-	while (right_button_flag == 0){
-		_delay_ms(1);
+	while (!check_flag_right()){
+		
 	}
-	right_button_flag = 0;
 	
 	
 	oled_clear_line(0);
@@ -237,9 +235,9 @@ void menu_calibrate_joystick(void){
 		strcpy_P(temp,(char*)pgm_read_word(&(calibrate_direction_array[i])));
 		sram_write_string(temp);
 		sram_push();
-		while (right_button_flag == 0){
-			_delay_ms(1);
+		while (!check_flag_right()){
+			
 		}
-		right_button_flag = 0;
+		
 	}
 }

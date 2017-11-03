@@ -22,8 +22,10 @@ void initialize_control_input(void){
 	ref_Y = read_control_input('Y');
 	ref_L = read_control_input('L');
 	ref_R = read_control_input('R');
-	printf("Calibration values: \tcal_X: %i\tcal_Y:%i\n",calibrate_x,calibrate_y);
-	printf("Reference Values: \tX %i\tY %i\tL %i\tR %i\t\n",ref_X,ref_Y,ref_L,ref_R);
+	#if UART_ENABLE
+		printf("Calibration values: \tcal_X: %i\tcal_Y:%i\n",calibrate_x,calibrate_y);
+		printf("Reference Values: \tX %i\tY %i\tL %i\tR %i\t\n",ref_X,ref_Y,ref_L,ref_R);
+	#endif
 }
 
 void calibrate_joystick(void){

@@ -15,16 +15,19 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
-
+#if UART_ENABLE
+	#include "../../common_library/uart.h"
+#endif
 #include "../../common_library/i_o.h"
 #include "input_conversion.h"//REMOVE THIS AND THE PRINTF IN THE button_interrupts.c FILE
-#include "menu.h"
 
 //------------------------------------------//
 //	FUNCTIONS								//
 //------------------------------------------//
 
 void initalize_interrupts(void);
+uint8_t check_flag_left(void);
+uint8_t check_flag_right(void);
 
 //------------------------------------------//
 //	INTERRUPTS								//

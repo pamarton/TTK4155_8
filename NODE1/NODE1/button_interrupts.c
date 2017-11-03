@@ -5,6 +5,7 @@
  *  Author: pamarton
  */ 
 #include "button_interrupts.h"
+uint8_t flag_left_button, flag_right_button;
 
 void initalize_interrupts(void){
 	BIT_ON(DDRB, PD2);//enable input
@@ -18,14 +19,40 @@ void initalize_interrupts(void){
 	
 	BIT_ON(GICR, INT0);//enabling the interrupts INT0 and INT1 in the memory ???????????????????? 21.09.17
 	BIT_ON(GICR, INT1);
+	
+	flag_right_button = 0;
+	flag_left_button = 0;
 }
 
-#include "../../common_library/uart.h"
+uint8_t check_flag_left(void){
+	if (flag_left_button == 1)
+	{
+		flag_left_button = 0;
+		return 1;
+	}
+	return 0;
+}
+
+uint8_t check_flag_right(void){
+	if (flag_right_button == 1)
+	{
+		flag_right_button = 0;
+		return 1;
+	}
+	return 0;
+}
+
 ISR(INT0_vect){//interrupt button Right
-	//printf("X: %i\tY: %i\tL: %i\tR: %i\n",read_control_input('X'),read_control_input('Y'),read_control_input('L'),read_control_input('R'));//REMOVE THIS AND THE #INCLUDE "input_convercions.h" in button_interrupts.h
-	menu_right_button_flag();//sets the interupt flag
+	#if UART_ENABLE
+		printf("R_INT\t");
+	#endif
+	flag_right_button = 1;
 }
 
 ISR(INT1_vect){//interrupt button Left
-	menu_left_button_flag();//sets the interrupt flag
+	#if UART_ENABLE
+	printf("L_INT\t");
+	#endif
+	flag_left_button = 1;
 }
+

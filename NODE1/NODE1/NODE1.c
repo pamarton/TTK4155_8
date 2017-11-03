@@ -12,33 +12,38 @@
 #include	"../../common_library/CAN.h"
 #include	<util/delay.h>
 #include	"menu.h"
+#include	"flappy_pixel.h"
 
 void init_all(void);
 void bootscreen(void);
 
+
 int main(void)
 {
 	init_all();
-	printf("test");
-	int8_t temp[8] = {1,2,3,4,5,6,7,8};
-	int8_t *data = temp;
+	
+	
+	flappy_main();
+	
+	uint8_t temp[8] = {1,2,3,4,5,6,7,8};
+	uint8_t *data = temp;
 
     uint8_t sendCAN = 1;
-	sram_write_int(12495);
-	while(1){
-		sram_push();
-	}
+	uint8_t controller = 0;
     while(1){
 	    if(sendCAN){
-		    
-		    CAN_message_send(data,0);
-			data[7]--;
-			_delay_ms(1000);
-	    }
-	    
-	    
-	    if(~sendCAN){
-		    CAN_data_receive();
+			controller = read_control_input('X');
+			
+			
+			if(controller != data[0]){
+				data[0] = controller;
+				CAN_message_send(data,0);
+			}
+	    }else if(~sendCAN){
+			if (CAN_data_receive())
+			{
+				
+			}		    
 	    }
 		menu_update();
     }
@@ -48,17 +53,15 @@ int main(void)
 void init_all(void){
 	cli();
 	init_UART();
-	
+	#if UART_ENABLE
 	printf("LOADING g17_%s %s %s\nINITIALIZING...\n\nUART successfully initialized\n\n", VERSION,__DATE__,__TIME__);
-	
+	#endif
 	BIT_ON(MCUCR,SRE); //SET THIS IN SOME INITALIZE FUNBCTION
 	BIT_ON(SFIOR,XMM2);//HVORFOR GJORDE DE DETTE I OLED?
 
 	oled_ini();
 	sram_init();
 	bootscreen();
-	sram_push();
-	
 	initialize_menu();
 	
 	initialize_control_input();
@@ -75,6 +78,7 @@ void init_all(void){
 #include <stdlib.h>
 void SRAM_test(void)//CAN BE REMOVED, IN CASE OF LOW STORAGE
 {
+
 	volatile char *ext_ram = (char *) 0x1800; // Start address for the SRAM
 	uint16_t ext_ram_size = 0x800;
 	uint16_t write_errors = 0;
@@ -113,31 +117,35 @@ void SRAM_test(void)//CAN BE REMOVED, IN CASE OF LOW STORAGE
 void bootscreen(void){
 	int x = 24;
 	int y = 61;
-	sram_draw_line(x,y,x-15,y-60);//letter G
-	sram_draw_line(x-15,y-60,x+15,y-60);
-	sram_draw_line(x+15,y-60,x+12,y-48);
-	sram_draw_line(x+12,y-48,x-6,y-48);
-	sram_draw_line(x-6,y-48,x,y-24);
-	sram_draw_line(x,y-24,x+3,y-36);
-	sram_draw_line(x+3,y-36,x+9,y-36);
-	sram_draw_line(x+9,y-36,x,y);//end of letter
 	
-	
+	sram_set_point(x-15,y);
+	sram_draw_line(x-15,y-60);//letter G
+	sram_draw_line(x+15,y-60);
+	sram_draw_line(x+15,y-48);
+	sram_draw_line(x-6,y-48);
+	sram_draw_line(x-6,y-12);
+	sram_draw_line(x+6,y-12);
+	sram_draw_line(x+6,y-36);
+	sram_draw_line(x+15,y-36);
+	sram_draw_line(x+15,y);
+	sram_draw_line(x-15,y);//end of letter
 	
 	x += 40;
 	sram_draw_rectangle(x-5,y,x+5,y-60);
 
 	x += 40;
-	sram_draw_line(x,y,x+15,y-60);//number 7
-	sram_draw_line(x-15,y-60,x+15,y-60);
-	sram_draw_line(x-15,y-60,x-12,y-48);
-	sram_draw_line(x-12,y-48,x+6,y-48);
-	sram_draw_line(x+6,y-48,x+3,y-36);
-	sram_draw_line(x+3,y-36,x-9,y-36);
-	sram_draw_line(x-9,y-36,x-6,y-24);
-	sram_draw_line(x-6,y-24,x,y-24);
-	sram_draw_line(x,y-24,x-3,y-12);
-	sram_draw_line(x-3,y-12,x,y);//end of number
+	sram_set_point(x+15,y-60);//number 7
+	sram_draw_line(x-15,y-60);
+	sram_draw_line(x-12,y-48);
+	sram_draw_line(x+6,y-48);
+	sram_draw_line(x+3,y-36);
+	sram_draw_line(x-9,y-36);
+	sram_draw_line(x-6,y-24);
+	sram_draw_line(x,y-24);
+	sram_draw_line(x-3,y-12);
+	sram_draw_line(x,y);
+	sram_draw_line(x+15,y-60);//end of number
+	
+	
 	sram_push();
-	_delay_ms(1000);
 }

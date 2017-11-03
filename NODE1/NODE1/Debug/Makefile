@@ -44,6 +44,7 @@ C_SRCS +=  \
 ../../../common_library/uart.c \
 ../adc.c \
 ../button_interrupts.c \
+../flappy_pixel.c \
 ../input_conversion.c \
 ../interrupts.c \
 ../menu.c \
@@ -66,6 +67,7 @@ SPI.o \
 uart.o \
 adc.o \
 button_interrupts.o \
+flappy_pixel.o \
 input_conversion.o \
 interrupts.o \
 menu.o \
@@ -81,6 +83,7 @@ SPI.o \
 uart.o \
 adc.o \
 button_interrupts.o \
+flappy_pixel.o \
 input_conversion.o \
 interrupts.o \
 menu.o \
@@ -96,6 +99,7 @@ SPI.d \
 uart.d \
 adc.d \
 button_interrupts.d \
+flappy_pixel.d \
 input_conversion.d \
 interrupts.d \
 menu.d \
@@ -111,6 +115,7 @@ SPI.d \
 uart.d \
 adc.d \
 button_interrupts.d \
+flappy_pixel.d \
 input_conversion.d \
 interrupts.d \
 menu.d \
@@ -132,6 +137,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

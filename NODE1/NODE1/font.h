@@ -10,10 +10,11 @@
 
 #include <avr/pgmspace.h>
 #define FONTLENGTH 100
+#define FONT_WIDTH 8
 // Font 8x8 - Large
 
 
-const unsigned char PROGMEM font[FONTLENGTH][8] = { //to use the oled_print_char add 32 to the numbers
+const unsigned char PROGMEM font[FONTLENGTH][FONT_WIDTH] = { //to use the oled_print_char add 32 to the numbers
 	{0b00000000,0b00000000,0b00000000,0b00000000,0b00000000,0b00000000,0b00000000,0b00000000}, //		0
 	{0b00000000,0b00000110,0b01011111,0b01011111,0b00000110,0b00000000,0b00000000,0b00000000}, // !		1
 	{0b00000000,0b00000111,0b00000111,0b00000000,0b00000111,0b00000111,0b00000000,0b00000000}, // "		2

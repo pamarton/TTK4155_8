@@ -16,6 +16,8 @@ adc.c
 
 button_interrupts.c
 
+flappy_pixel.c
+
 input_conversion.c
 
 interrupts.c
