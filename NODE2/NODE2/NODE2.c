@@ -12,12 +12,18 @@
 #include	"../../common_library/CAN.h"
 #include	<util/delay.h>
 #include	"servo_driver.h"
+#include	"IRsensor.h"
+
+
 
 void init_all(void);
 
 int main(void){
 	init_all();
 	
+	printf("Hallo\n");
+	
+	IR_init();
 	
 	
 	servo_init();
@@ -34,6 +40,9 @@ int main(void){
 		if(CAN_data_receive()){
 			servo_set(CAN_message_receive()->data[0]);
 		 }
+		// read_adc();
+		printf("Value of IR is:	%i\n", ADCH);
+		_delay_ms(500);
 	 }
     return 0;
 }

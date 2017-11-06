@@ -159,6 +159,12 @@
       <SubType>compile</SubType>
       <Link>uart.h</Link>
     </Compile>
+    <Compile Include="IRsensor.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="IRsensor.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="servo_driver.c">
       <SubType>compile</SubType>
     </Compile>

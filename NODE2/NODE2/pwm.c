@@ -35,7 +35,7 @@ void pwm_init(double period){	//	Function for initilization of the timers. Perio
 	//ICR3 = F_CPU/128/2;
 }
 
-void pwm_set_pulse_width(double val){//vel is given in nano-seconds
+void pwm_set_pulse_width(double val){	//vel is given in nano-seconds
 	OCR3A = (int)(SCALAR_IN_MS * val);
 }
 

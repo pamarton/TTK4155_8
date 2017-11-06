@@ -23,7 +23,7 @@ int main(void)
 	init_all();
 	
 	
-	flappy_main();
+	//flappy_main();
 	
 	uint8_t temp[8] = {1,2,3,4,5,6,7,8};
 	uint8_t *data = temp;

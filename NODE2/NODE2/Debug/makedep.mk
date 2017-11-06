@@ -12,6 +12,8 @@
 
 ..\..\common_library\uart.c
 
+IRsensor.c
+
 servo_driver.c
 
 NODE2.c

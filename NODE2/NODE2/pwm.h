@@ -28,8 +28,8 @@
 //	DECLARATIONS							//
 //------------------------------------------//
 
-void pwm_init(double period);	//	Function for initialization of the timers 
-void pwm_set_period(double period); //	Function for setting period of the pwm
-void pwm_set_pulse_width(double period);//	Function for setting the pulse width of the pwm
+void pwm_init(double period);				//	Function for initialization of the timers 
+void pwm_set_period(double period);			//	Function for setting period of the pwm
+void pwm_set_pulse_width(double period);	//	Function for setting the pulse width of the pwm
 
 #endif /* PWM_H_ */
