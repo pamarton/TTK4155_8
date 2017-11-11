@@ -12,6 +12,8 @@
 
 ..\..\common_library\uart.c
 
+buzzer.c
+
 IRsensor.c
 
 servo_driver.c

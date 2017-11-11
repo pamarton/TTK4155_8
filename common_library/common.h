@@ -37,13 +37,17 @@
 //	DEFFINITIONS FOR THE UART				//
 //------------------------------------------//
 
+
+
 #if NODE == 1
 	#define F_CPU 4915200	// clock frequency in Hz
+	#define UART_ENABLE 0
 #elif NODE == 2
 	#define F_CPU 16000000	// clock frequency in Hz
+	#define UART_ENABLE 1
 #endif
 
-#define UART_ENABLE 0
+
 
 //------------------------------------------//
 //	DEFINITIONS FOR THE ADC					//
@@ -62,15 +66,34 @@
 //------------------------------------------//
 //	DEFINITIONS FOR THE CAN					//
 //------------------------------------------//
-
-#define CAN_ID 40 //ID of the message (we might change this)
-#define CAN_MESSAGE_LENGTH 8//length of can messages
+#if NODE == 1
+	#define CAN_ID 20 //ID of the message (we might change this)
+	#define CAN_MESSAGE_LENGTH 8//length of can messages
+#elif NODE == 2
+	#define CAN_ID 40 //ID of the message (we might change this)
+	#define CAN_MESSAGE_LENGTH 8//length of can messages
+#endif
 
 #define RXBnSIDH 0x61
 #define RXBnSIDL 0x62
 #define RXBnDLC 0x65
 #define RXBnDM 0x66
 
+
+
+//------------------------------------------//
+//	DEFINITIONS FOR THE GAMES					//
+//------------------------------------------//
+
+#if NODE == 1
+#define GAME_2048 1
+#define FLAPPY 1
+#define TOTAL_GAMES (FLAPPY + GAME_2048)
+#define HIGHSCORE_ENABLE 1
+#define TOTAL_MAINMENU (3 + HIGHSCORE_ENABLE + (TOTAL_GAMES>0))
+#define TOTAL_DEBUG 2
+#define TOTAL_OPTION 2
+#endif
 
 
 #endif /* COMMON_H_ */

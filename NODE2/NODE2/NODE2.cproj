@@ -159,6 +159,12 @@
       <SubType>compile</SubType>
       <Link>uart.h</Link>
     </Compile>
+    <Compile Include="buzzer.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="buzzer.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="IRsensor.c">
       <SubType>compile</SubType>
     </Compile>

@@ -42,6 +42,7 @@ C_SRCS +=  \
 ../../../common_library/MCP2515_driver.c \
 ../../../common_library/SPI.c \
 ../../../common_library/uart.c \
+../buzzer.c \
 ../IRsensor.c \
 ../servo_driver.c \
 ../NODE2.c \
@@ -60,6 +61,7 @@ i_o.o \
 MCP2515_driver.o \
 SPI.o \
 uart.o \
+buzzer.o \
 IRsensor.o \
 servo_driver.o \
 NODE2.o \
@@ -71,6 +73,7 @@ i_o.o \
 MCP2515_driver.o \
 SPI.o \
 uart.o \
+buzzer.o \
 IRsensor.o \
 servo_driver.o \
 NODE2.o \
@@ -82,6 +85,7 @@ i_o.d \
 MCP2515_driver.d \
 SPI.d \
 uart.d \
+buzzer.d \
 IRsensor.d \
 servo_driver.d \
 NODE2.d \
@@ -93,6 +97,7 @@ i_o.d \
 MCP2515_driver.d \
 SPI.d \
 uart.d \
+buzzer.d \
 IRsensor.d \
 servo_driver.d \
 NODE2.d \
@@ -112,6 +117,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 
