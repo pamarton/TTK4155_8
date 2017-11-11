@@ -18,6 +18,8 @@ button_interrupts.c
 
 flappy_pixel.c
 
+game_2048.c
+
 input_conversion.c
 
 interrupts.c
@@ -27,6 +29,8 @@ menu.c
 NODE1.c
 
 oled.c
+
+SRAM.c
 
 timer.c
 

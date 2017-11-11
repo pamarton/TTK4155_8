@@ -45,11 +45,13 @@ C_SRCS +=  \
 ../adc.c \
 ../button_interrupts.c \
 ../flappy_pixel.c \
+../game_2048.c \
 ../input_conversion.c \
 ../interrupts.c \
 ../menu.c \
 ../NODE1.c \
 ../oled.c \
+../SRAM.c \
 ../timer.c
 
 
@@ -68,11 +70,13 @@ uart.o \
 adc.o \
 button_interrupts.o \
 flappy_pixel.o \
+game_2048.o \
 input_conversion.o \
 interrupts.o \
 menu.o \
 NODE1.o \
 oled.o \
+SRAM.o \
 timer.o
 
 OBJS_AS_ARGS +=  \
@@ -84,11 +88,13 @@ uart.o \
 adc.o \
 button_interrupts.o \
 flappy_pixel.o \
+game_2048.o \
 input_conversion.o \
 interrupts.o \
 menu.o \
 NODE1.o \
 oled.o \
+SRAM.o \
 timer.o
 
 C_DEPS +=  \
@@ -100,11 +106,13 @@ uart.d \
 adc.d \
 button_interrupts.d \
 flappy_pixel.d \
+game_2048.d \
 input_conversion.d \
 interrupts.d \
 menu.d \
 NODE1.d \
 oled.d \
+SRAM.d \
 timer.d
 
 C_DEPS_AS_ARGS +=  \
@@ -116,11 +124,13 @@ uart.d \
 adc.d \
 button_interrupts.d \
 flappy_pixel.d \
+game_2048.d \
 input_conversion.d \
 interrupts.d \
 menu.d \
 NODE1.d \
 oled.d \
+SRAM.d \
 timer.d
 
 OUTPUT_FILE_PATH +=NODE1.elf
@@ -137,6 +147,10 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
+
+
 
 
 

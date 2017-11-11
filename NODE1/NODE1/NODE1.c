@@ -9,41 +9,47 @@
 #include	<avr/io.h>
 #include	"../../common_library/common.h"
 #include	<avr/interrupt.h>
-#include	"../../common_library/CAN.h"
+#include	"../../common_library/can.h"
 #include	<util/delay.h>
 #include	"menu.h"
-#include	"flappy_pixel.h"
+#include	"timer.h"
 
 void init_all(void);
 void bootscreen(void);
-
+#include "game_2048.h"
 
 int main(void)
 {
 	init_all();
 	
+	sram_update_oled();
 	
-	//flappy_main();
+	
+	//timer_delay(500);
+	
+	//sram_init();
+	//main_2048();
+	
 	
 	uint8_t temp[8] = {1,2,3,4,5,6,7,8};
 	uint8_t *data = temp;
 
+	
     uint8_t sendCAN = 1;
 	uint8_t controller = 0;
     while(1){
 	    if(sendCAN){
 			controller = read_control_input('X');
 			
-			
 			if(controller != data[0]){
 				data[0] = controller;
 				CAN_message_send(data,0);
 			}
 	    }else if(~sendCAN){
-			if (CAN_data_receive())
-			{
-				
-			}		    
+			//if (CAN_data_receive())
+			//{
+			//	
+			//}		    
 	    }
 		menu_update();
     }
@@ -146,6 +152,5 @@ void bootscreen(void){
 	sram_draw_line(x,y);
 	sram_draw_line(x+15,y-60);//end of number
 	
-	
-	sram_push();
+	sram_update_oled();
 }

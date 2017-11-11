@@ -180,6 +180,12 @@
     <Compile Include="font.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="game_2048.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="game_2048.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="input_conversion.c">
       <SubType>compile</SubType>
     </Compile>
@@ -202,6 +208,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="oled.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SRAM.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SRAM.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="timer.c">

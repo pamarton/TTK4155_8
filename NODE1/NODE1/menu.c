@@ -9,9 +9,6 @@
 menu* current_head;
 menu* current_selected;
 
-uint8_t right_button_flag = 0;
-uint8_t left_button_flag = 0;
-
 void setup_menu(menu * new_menu, menu * ptr_sib_down, menu * ptr_parent, menu * ptr_child, int n_sib, PGM_P title){
 	//new_menu->ptr_self = new_menu;
 	//new_menu->ptr_sib_up = ptr_sib_up;
@@ -23,57 +20,168 @@ void setup_menu(menu * new_menu, menu * ptr_sib_down, menu * ptr_parent, menu * 
 	new_menu->n_sib = n_sib;
 }
 
-	
-const char mainmenu_entry_0[] PROGMEM = "Start";
-const char mainmenu_entry_1[] PROGMEM = "Highscore";
-const char mainmenu_entry_2[] PROGMEM = "Debug";
-const char mainmenu_entry_3[] PROGMEM = "Options";
+
+#if HIGHSCORE_ENABLE 
+const char mainmenu_entry_highscore[] PROGMEM = "Highscore";
 const char highscore_entry_0[] PROGMEM = "Highscore:";
 const char highscore_entry_1[] PROGMEM = "2nd";
 const char highscore_entry_2[] PROGMEM = "3rd";
+#endif
+#if TOTAL_GAMES>0
+const char mainmenu_entry_games[] PROGMEM = "Games";
+const char game_entry_0[] PROGMEM = "Flappy Pixel";
+const char game_entry_1[] PROGMEM = "2048";
+#endif
+
+const char mainmenu_entry_start[] PROGMEM = "Start";
+const char mainmenu_entry_debug[] PROGMEM = "Debug";
+const char mainmenu_entry_options[] PROGMEM = "Options";
+
 const char option_entry_0[] PROGMEM = "Music";
 const char option_entry_1[] PROGMEM = "Contrast";
-const char option_entry_2[] PROGMEM = "opt2";
-const char option_entry_3[] PROGMEM = "Inv. colors";
+
 const char debug_entry_0[] PROGMEM = "fit screen";
 const char debug_entry_1[] PROGMEM = "Calibrate";
-const char debug_entry_2[] PROGMEM = "debug2";
-const char debug_entry_3[] PROGMEM = "debug3";
 
+
+//SETUP OF THE DEBUG
+menu debug_0;
+menu debug_1;
+menu *debug_list[TOTAL_DEBUG] = {
+	&debug_0,
+	&debug_1
+};
+const char *debug_entry_list[TOTAL_DEBUG] = {
+	debug_entry_0,
+	debug_entry_1
+};
+menu *debug_ptr_list[TOTAL_DEBUG] = {
+	NULL,
+	NULL
+};
+
+//SETUP OF THE OPTION
+menu option_0;
+menu option_1;
+menu *option_list[TOTAL_OPTION] = {
+	&option_0,
+	&option_1
+};
+const char *option_entry_list[TOTAL_OPTION] = {
+	option_entry_0,
+	option_entry_1
+};
+menu *option_ptr_list[TOTAL_OPTION] = {
+	NULL,
+	NULL,
+};
+#if TOTAL_GAMES > 0
+#if FLAPPY
+menu game_0;
+#endif
+#if GAME_2048
+menu game_1;
+#endif
+menu *game_list[TOTAL_OPTION] = {
+	#if FLAPPY
+	&game_0,
+	#endif
+	#if GAME_2048
+	&game_1
+	#endif
+};
+const char *game_entry_list[TOTAL_OPTION] = {
+	#if FLAPPY
+	game_entry_0,
+	#endif
+	#if GAME_2048
+	game_entry_1
+	#endif
+};
+menu *game_ptr_list[TOTAL_OPTION] = {
+	#if FLAPPY
+	NULL,
+	#endif
+	#if GAME_2048
+	NULL
+	#endif
+};
+#endif
+
+
+
+//SETUP OF THE MAIN MENU (must be done last since it uses the previous constants and pointers
+menu mainmenu_debug;
+menu mainmenu_options;
+#if HIGHSCORE_ENABLE
+menu mainmenu_highscore;
+#endif
+menu mainmenu_options;
+menu mainmenu_start;
+#if TOTAL_GAMES > 0
+menu mainmenu_games;
+#endif
+menu *mainmenu_list[TOTAL_MAINMENU] = {
+	&mainmenu_start,
+	#if TOTAL_GAMES > 0
+	&mainmenu_games,
+	#endif
+	#if HIGHSCORE_ENABLE
+	&mainmenu_highscore,
+	#endif
+	&mainmenu_options,
+	&mainmenu_debug
+};
+const char *mainmenu_entry_list[TOTAL_MAINMENU] = {
+	mainmenu_entry_start,
+	#if TOTAL_GAMES > 0
+	mainmenu_entry_games,
+	#endif
+	#if HIGHSCORE_ENABLE
+	mainmenu_entry_highscore,
+	#endif
+	mainmenu_entry_options,
+	mainmenu_entry_debug
+};
+menu *mainmenu_ptr_list[TOTAL_MAINMENU] = {
+	NULL,//START GAME POINTER
+	#if TOTAL_GAMES > 0
+	&game_0,//GAME POINTER
+	#endif
+	#if HIGHSCORE_ENABLE
+	NULL,//HIGHSCORE POINTER
+	#endif
+	&option_0,
+	&debug_0
+};
 
 char temp[16];
 
-// menu highscore_0;
-// menu highscore_1;
-// menu highscore_2;
-menu option_0;
-menu option_1;
-//menu option_2;
-//menu option_3;
-menu debug_0;
-menu debug_1;
-menu mainmenu_0;//Highscore
-menu mainmenu_1;
-menu mainmenu_2;
-//menu mainmenu_3;
-
 void initialize_menu(void){
-
-	setup_menu(&mainmenu_0,&mainmenu_1,NULL,NULL,3,mainmenu_entry_1);
-	setup_menu(&mainmenu_1,&mainmenu_2,NULL,&debug_0,3,mainmenu_entry_2);
-	setup_menu(&mainmenu_2,&mainmenu_0,NULL,&option_0,3,mainmenu_entry_3);
-	
-	setup_menu(&option_0,&option_1,&mainmenu_0,NULL,2,option_entry_0);
-	setup_menu(&option_1,&option_0,&mainmenu_0,NULL,2,option_entry_1);
-
-	setup_menu(&debug_0,&debug_1,&mainmenu_0,NULL,2,debug_entry_0);
-	setup_menu(&debug_1,&debug_0,&mainmenu_0,NULL,2,debug_entry_1);
+	for (uint8_t m = 0; m < TOTAL_MAINMENU; m++)
+	{
+		setup_menu(mainmenu_list[m],mainmenu_list[(m+1)%TOTAL_MAINMENU],NULL,mainmenu_ptr_list[m],TOTAL_MAINMENU,mainmenu_entry_list[m]);
+	}
+	for (uint8_t o = 0; o < TOTAL_OPTION; o++)
+	{
+		setup_menu(option_list[o],option_list[(o+1)%TOTAL_OPTION],mainmenu_list[0],option_ptr_list[o],TOTAL_OPTION,option_entry_list[o]);
+	}
+	for (uint8_t d = 0; d < TOTAL_DEBUG; d++)
+	{
+		setup_menu(debug_list[d],debug_list[(d+1)%TOTAL_DEBUG],mainmenu_list[0],debug_ptr_list[d],TOTAL_DEBUG,debug_entry_list[d]);
+	}
+	#if TOTAL_GAMES > 0
+	for (uint8_t g = 0; g < TOTAL_GAMES; g++)
+	{
+		setup_menu(game_list[g],game_list[(g+1)%TOTAL_GAMES],mainmenu_list[0],game_ptr_list[g],TOTAL_GAMES,game_entry_list[g]);
+	}
+	#endif
 	
 	// current_head is the top entry of the current menu.
-	current_head = &mainmenu_0;
+	current_head = &mainmenu_start;
 	
 	// current_selected is the selected menu entry of the current menu.
-	current_selected = &mainmenu_0;
+	current_selected = &mainmenu_start;
 	
 }
 
@@ -86,7 +194,6 @@ void menu_update(void){
 		{
 			sram_clear_line(j);
 		}
-		
 		for (int i = 0; i < current_head->n_sib; i++)
 		{
 			oled_goto_line(i);
@@ -105,7 +212,7 @@ void menu_update(void){
 	
 	if(timer_check_flag()){//a timer with frequency of 60Hz ensures a framerate of 60Hz
 		navigation_counter++;
-		sram_push();
+		sram_update_oled();
 		timer_disable_flag();
 		sram_scroll_line(7,1);
 	}
@@ -159,21 +266,18 @@ int navigate_menu(void){
 	
 }
 
-void menu_left_button_flag(void){
-	left_button_flag = 1;
-}
-
-
-void menu_right_button_flag(void){
-	right_button_flag = 1;
-}
-
 void menu_function_selected(void){
 	if(current_selected == &option_1){
 		menu_set_contrast();
 	}else if(current_selected == &debug_1){
 		menu_calibrate_joystick();
 	}
+	#if FLAPPY == 1
+	else if(current_selected == &game_0){
+		flappy_main();
+		printf("FLAPPYT");
+	}
+	#endif
 }
 
 const char btn_0[] PROGMEM = "->L_BTN";
@@ -190,7 +294,7 @@ void menu_set_contrast(void){
 	oled_goto_line(2);
 	strcpy_P(temp,btn_1);
 	sram_write_string(temp);
-	sram_push();
+	sram_update_oled();
 	while (!check_flag_right()){
 		write_c(0x81);
 		write_c(readADC(3)/2);
@@ -219,7 +323,7 @@ void menu_calibrate_joystick(void){
 	oled_goto_line(2);
 	strcpy_P(temp,btn_1);
 	sram_write_string(temp);
-	sram_push();
+	sram_update_oled();
 	while (!check_flag_right()){
 		
 	}
@@ -234,7 +338,7 @@ void menu_calibrate_joystick(void){
 		oled_clear_line(1);
 		strcpy_P(temp,(char*)pgm_read_word(&(calibrate_direction_array[i])));
 		sram_write_string(temp);
-		sram_push();
+		sram_update_oled();
 		while (!check_flag_right()){
 			
 		}

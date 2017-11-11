@@ -12,19 +12,20 @@
 
 
 #include <stdlib.h>//RANDOM FUNCTIOn
-#include "oled.h"
+#include "SRAM.h"
 #include "button_interrupts.h"
 #include "input_conversion.h"
 #include "timer.h"
 #include "../../common_library/common.h"
+#include "../../common_library/can.h"
 
 int flappy_main(void);
 void flappy_loading_screen(void);
 void flappy_game(void);
-
+void flappy_restart(void);
 void flappy_render_wall(uint8_t wall, uint8_t pos);
 uint8_t flappy_pixel_collision(void);
-void flappy_controll();
+void flappy_controll(void);
 
 void flappy_scroll_wall(void);
 

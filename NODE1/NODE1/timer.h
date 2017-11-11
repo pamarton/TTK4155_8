@@ -23,6 +23,7 @@
 void initialize_timer(uint8_t fps);	//	Function for initialization of the timers 
 uint8_t timer_check_flag(void);	//	function for checking the flag
 void timer_disable_flag(void); //	function for disabling the flag
+void timer_delay(int timer_ms);
 
 //------------------------------------------//
 //	INTERRUPTS									//

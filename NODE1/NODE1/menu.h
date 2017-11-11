@@ -13,13 +13,17 @@
 //	INCLUDES								//
 //------------------------------------------//
 
-#include "oled.h"
+#include "SRAM.h"
 #include <avr/pgmspace.h>
 #include "../../common_library/uart.h"
 #include "input_conversion.h"
 #include "button_interrupts.h"
 #include "timer.h"
 #include <stdlib.h>//malloc
+
+#if FLAPPY == 1
+#include	"flappy_pixel.h"
+#endif
 
 //------------------------------------------//
 //	DEFINITIONS								//

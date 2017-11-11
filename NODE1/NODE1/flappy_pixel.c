@@ -6,69 +6,97 @@
  */ 
 #include "flappy_pixel.h"
 #define FONT_WIDTH 8
-int score = 0;
-uint8_t quit = 0;
-uint8_t pause = 0;
-int flappy_main(void){
-	srand(TCNT0); //using the clock counter for this, to give an aproximated random value each time
-	flappy_loading_screen();
-	
-	while (quit != 1)
-	{
-		flappy_game();
-		if (check_flag_right())
-		{
-			
-		}
-	}
-	
-	uint8_t restart = 0;
-	return restart;
-}
-
-
-void flappy_loading_screen(void){
-	sram_init();
-	oled_goto_line(0);
-	sram_write_string("  FLAPPY BIRD");
-	sram_push();
-	for (uint8_t i = 0; i < FPS; i++)
-	{
-		while (0 == timer_check_flag()){
-		}
-	}
-	
-	sram_draw_new_line(8*FONT_WIDTH+4,8,13*FONT_WIDTH+4,0);
-	sram_draw_new_line(8*FONT_WIDTH+4,0,13*FONT_WIDTH+4,8);
-	sram_push();
-	for (uint8_t i = 0; i < FPS/3; i++)
-	{
-		while (0 == timer_check_flag()){
-		}
-	}
-	oled_goto_line(2);
-	oled_goto_column(FONT_WIDTH*8+4);
-	sram_write_string("PIXEL");
-	sram_push();
-	for (uint8_t i = 0; i < FPS*2; i++)
-	{
-		while (0 == timer_check_flag()){
-		}
-	}
-	sram_init();
-}
-
 #define WALL_HOLE 20
 #define SCREEN_HEIGHT 64
 #define SCREEN_WIDTH 128
 #define PLAYER_POS 10
 #define DEATH_CROSS 5
-	
+int score = 0;
+uint8_t quit = 0;
+uint8_t pause = 0;
 volatile char *ext_ram_adress = (char *) 0x1800;
 uint8_t player_height = 0;
 uint8_t game_over = 0;
+double velocity = 0;
+double acceleration = 0.03;
+double player_height_accurate = 0;
+uint8_t difficulity = 100;
+uint8_t new_wall = 100;
+
+uint8_t can_data[8] = {20,2,0,0,0,0,0,0};
+int flappy_main(void){
+	srand(TCNT0); //using the clock counter for this, to give an approximated random value each time
+	quit = 0;
+	CAN_construct_message(50,8);
+	CAN_message_send(can_data,0);
+	flappy_loading_screen();
+
+	while (quit != 1){
+		game_over = 0;
+		
+		player_height_accurate = 1;
+		player_height = 1;
+		velocity = 0;
+		difficulity = 100;
+		score = 0;
+		flappy_game();
+		sram_goto_line(6);
+		sram_write_string("   TRY AGAIN?");
+		flappy_restart();
+	}
+	
+	return 0;
+}
+
+void flappy_loading_screen(void){
+	sram_init();
+	sram_goto_line(0);
+	sram_write_string("  FLAPPY BIRD");
+	sram_update_oled();
+	
+	timer_delay(1000);
+	
+	sram_draw_new_line(8*FONT_WIDTH+4,8,13*FONT_WIDTH+4,0);
+	sram_draw_new_line(8*FONT_WIDTH+4,0,13*FONT_WIDTH+4,8);
+	sram_update_oled();
+	
+	timer_delay(1000);
+	
+	sram_goto_line(2);
+	sram_goto_column(FONT_WIDTH*8+4);
+	sram_write_string("PIXEL");
+	sram_update_oled();
+	
+	timer_delay(500);
+	
+	for (uint8_t i = 0; i < FONT_WIDTH*2; i++)
+	{
+		for (uint8_t x = FONT_WIDTH*2; x < FONT_WIDTH*8; x++){
+			sram_scroll_vertically(x,0,FONT_WIDTH*3,1,0);
+		}
+		timer_delay(30);
+		sram_update_oled();
+	}
+	
+	//sram
+	
+	flappy_restart();
+}
+
+void flappy_restart(void){
+	sram_goto_line(7);
+	sram_write_string("BACK        PLAY");
+	sram_update_oled();
+	quit = 0;
+	while (!(quit | check_flag_right()))
+	{
+		quit = check_flag_left();
+	}
+	sram_init();
+}
+
 void flappy_game(void){
-	sram_push();
+	sram_update_oled();
 	while (!flappy_pixel_collision() && !game_over)
 	
 	{
@@ -76,18 +104,17 @@ void flappy_game(void){
 			flappy_controll();
 			sram_pixel(PLAYER_POS,player_height);
 			flappy_scroll_wall();
-			sram_push();
+			sram_update_oled();
 		}
 		if(check_flag_left()){//PAUSE
-			oled_goto_line(0);
-			oled_goto_column(0);
+			sram_goto_line(0);
+			sram_goto_column(0);
 			sram_write_char('S');
 			int tempscore = score;
 			for (uint8_t i = 5; i > 1; i--)
 			{
-				oled_goto_line(i);
-				oled_goto_column(0);
-				printf("%i",tempscore%10);
+				sram_goto_line(i);
+				sram_goto_column(0);
 				if(tempscore != 0){
 					sram_write_char('0'+(tempscore%10));
 					tempscore -= tempscore%10;
@@ -95,28 +122,27 @@ void flappy_game(void){
 				}
 				
 			}
-			oled_goto_line(7);
-			oled_goto_column(0);
+			sram_goto_line(7);
+			sram_goto_column(0);
 			sram_write_char('P');
-			sram_push();
+			sram_update_oled();
 			while(!(check_flag_left() | check_flag_right())){
 				
 			}
 		}
 	}
-	sram_draw_new_line(PLAYER_POS-DEATH_CROSS,player_height-DEATH_CROSS,PLAYER_POS+DEATH_CROSS,player_height+DEATH_CROSS);
-	sram_draw_new_line(PLAYER_POS-DEATH_CROSS,player_height+DEATH_CROSS,PLAYER_POS+DEATH_CROSS,player_height-DEATH_CROSS);
-	sram_draw_new_circle(PLAYER_POS,player_height,7);
-	oled_goto_line(7);
-	oled_goto_column(FONT_WIDTH*4);
+	can_data[0] = 1;
+	CAN_message_send(can_data,0);
+	timer_delay(1000);
+	sram_init();
+	sram_goto_line(0);
+	sram_goto_column(FONT_WIDTH*3);
+	sram_write_string("GAME  OVER");
+	sram_goto_line(1);
+	sram_goto_column(FONT_WIDTH*4);
 	sram_write_string("SCORE: ");
 	sram_write_int(score);
-	sram_push();
-}
-
-void flappy_render(void);
-void flappy_render(void){
-	
+	sram_update_oled();
 }
 
 void flappy_render_wall(uint8_t selected_wall, uint8_t pos){
@@ -130,14 +156,9 @@ void flappy_render_wall(uint8_t selected_wall, uint8_t pos){
 	}
 }
 
-double velocity = 0;
-double acceleration = 0.03;
-double player_height_accurate = 0;
-
-void flappy_controll(){
+void flappy_controll(void){
 	velocity += acceleration;
 	if(check_flag_left() | check_flag_right()){
-		printf("vel");
 		velocity -= 1;
 	}
 	if(velocity > 1){
@@ -154,21 +175,12 @@ void flappy_controll(){
 	player_height = (int)player_height_accurate;
 }
 
-
 uint8_t flappy_pixel_collision(void){
 	if (ext_ram_adress[PLAYER_POS+((player_height-player_height%8)/8)*128] & (1<<player_height%8)){
-		printf("C");
 		return 1;
-		
 	}
 	return 0;
 }
-
-uint8_t difficulity = 100;
-uint8_t new_wall = 100;
-
-
-
 
 void flappy_scroll_wall(void){
 	
