@@ -14,21 +14,31 @@
 #include	"servo_driver.h"
 #include	"IRsensor.h"
 #include	"buzzer.h"
-
-
+#include	"SD_card.h"
+#include	"sounds.h"
 void init_all(void);
 
 int main(void){
 	init_all();
 	
 	printf("Hallo\n");
-	//servo_init();
-	buzzer_init();
-	buzzer_set_freq(300);
-	_delay_ms(300);
-	buzzer_of();
+	servo_init();
 	
-	/*IR_init();*/
+	/*
+	buzzer_init();
+	buzzer_set_freq(100);
+	_delay_ms(200);
+	buzzer_of();
+	*/
+	IR_init();
+	
+	
+	
+	//SD_CARD
+	//SD_initialize();
+	//SD_test();
+	
+	//END SD_CARD
 	
 	
 	
@@ -44,18 +54,12 @@ int main(void){
 		}
 		if(CAN_data_receive()){
 			//_delay_ms(1000);
-			buzzer_set_freq(300);
-			_delay_ms(300);
-			buzzer_set_freq(200);
-			_delay_ms(300);
-			buzzer_set_freq(100);
-			_delay_ms(300);
-			buzzer_of();
+			//sound_play_effect(1);
 			
 			//servo_set(CAN_message_receive()->data[0]);
-		 }
-		// read_adc();
-		//printf("Value of IR is:	%i\n", ADCH);
+		}
+		read_adc();
+		printf("IR 	%i\n", ADCH);
 	}
     return 0;
 }

@@ -16,9 +16,13 @@ buzzer.c
 
 IRsensor.c
 
+SD_card.c
+
 servo_driver.c
 
 NODE2.c
 
 pwm.c
+
+sounds.c
 

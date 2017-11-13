@@ -34,26 +34,23 @@ void buzzer_init(void){	//	Function for initilization of the timers. Period is g
 	TCCR4B &= ~(1<<CS41);
 	
 	// Define TOP. Compare Table 17.2.				
-	buzzer_set_period(3);
+	buzzer_set_period(1);
 	buzzer_set_freq(4);
-	//buzzer_of();
-	//ICR3 = F_CPU/128/2;
 }
 
-void buzzer_set_period(double period){	//vel is given in nano-seconds
+void buzzer_set_period(double period){
+	TCNT4 = 0;
 	OCR4A = period;
-	buzzer_on = 1;
 }
 
 void buzzer_set_freq(double freq){
 	DDRH |= (1 << PH3);
-	
-	ICR4 = (int)(SCALAR_IN_MS * 1000 / freq);
-	OCR4A = 0;
-	buzzer_on = 1;
+	TCNT4 = 0;
+	ICR4 = (int)(BUZZER_SCALAR_IN_MS * 1000 / freq);
 }
 
 void buzzer_of(){
-	DDRH &= ~(1 << PH3);
-	buzzer_on = 0;
+	DDRH &= ~(1<<PH3);
+	TCNT4 = 0;
 }
+

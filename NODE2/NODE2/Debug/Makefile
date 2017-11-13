@@ -44,9 +44,11 @@ C_SRCS +=  \
 ../../../common_library/uart.c \
 ../buzzer.c \
 ../IRsensor.c \
+../SD_card.c \
 ../servo_driver.c \
 ../NODE2.c \
-../pwm.c
+../pwm.c \
+../sounds.c
 
 
 PREPROCESSING_SRCS += 
@@ -63,9 +65,11 @@ SPI.o \
 uart.o \
 buzzer.o \
 IRsensor.o \
+SD_card.o \
 servo_driver.o \
 NODE2.o \
-pwm.o
+pwm.o \
+sounds.o
 
 OBJS_AS_ARGS +=  \
 can.o \
@@ -75,9 +79,11 @@ SPI.o \
 uart.o \
 buzzer.o \
 IRsensor.o \
+SD_card.o \
 servo_driver.o \
 NODE2.o \
-pwm.o
+pwm.o \
+sounds.o
 
 C_DEPS +=  \
 can.d \
@@ -87,9 +93,11 @@ SPI.d \
 uart.d \
 buzzer.d \
 IRsensor.d \
+SD_card.d \
 servo_driver.d \
 NODE2.d \
-pwm.d
+pwm.d \
+sounds.d
 
 C_DEPS_AS_ARGS +=  \
 can.d \
@@ -99,9 +107,11 @@ SPI.d \
 uart.d \
 buzzer.d \
 IRsensor.d \
+SD_card.d \
 servo_driver.d \
 NODE2.d \
-pwm.d
+pwm.d \
+sounds.d
 
 OUTPUT_FILE_PATH +=NODE2.elf
 
@@ -117,6 +127,10 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
+
+
 
 
 

@@ -53,22 +53,22 @@ void IR_init(void){
 
 	
 	
-	uint16_t read_adc(void)
-	{
-		//ADMUX = (ch & 0x00);
-		//ADCSRA &= ~(1<<ADEN);			//Disabling ADC -> restarting the prescaler
-		//ADCSRA |= (1<<ADEN);			//Enabling the ADC
-		//ADCSRA |= (1<<ADSC);            //start conversion
+uint16_t read_adc(void)
+{
+	//ADMUX = (0);
+	//ADCSRA &= ~(1<<ADEN);			//Disabling ADC -> restarting the prescaler
+	//ADCSRA |= (1<<ADEN);			//Enabling the ADC
+	ADCSRA |= (1<<ADSC);            //start conversion
 
 		
-		while( (ADCSRA & (1<<ADSC)) );                        //Wait for conversion to be done.
+	while(ADCSRA & (1<<ADSC));                        //Wait for conversion to be done.
 		
-		//read ADC somewhere
+	//read ADC somewhere
 
-		//printf("%i", ADCH); 
-		return 0;   
-		                                     //return the ADC conversion result from the ADC Result Registers (ADCL, ADCH)
-	}
+	//printf("%i", ADCH); 
+	return 0;   
+		                                    //return the ADC conversion result from the ADC Result Registers (ADCL, ADCH)
+}
 	
 
 

@@ -24,7 +24,7 @@
 #ifndef COMMON_H_
 #define COMMON_H_
 
-#define VERSION "l6d2" //version name
+#define VERSION "ver9" //version name
 
 #ifdef __AVR_ATmega162__//DEFÌNING NODE
 	#define NODE 1

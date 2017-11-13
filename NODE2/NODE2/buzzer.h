@@ -19,9 +19,9 @@
 //	DEFINITIONS								//
 //------------------------------------------//
 
-#define FREQ_IN_MS 1000//Frequency of a milli-second 
-#define PWM_PRESCALER 1024//Prescaler of the pwm
-#define SCALAR_IN_MS (double)(F_CPU/FREQ_IN_MS)/PWM_PRESCALER//Number the timer count to each milli-second
+#define BUZZER_FREQ_IN_MS 1000//Frequency of a milli-second 
+#define BUZZER_PRESCALER 1024//Prescaler of the pwm
+#define BUZZER_SCALAR_IN_MS (double)(F_CPU/BUZZER_FREQ_IN_MS)/BUZZER_PRESCALER//Number the timer count to each milli-second
 
 //------------------------------------------//
 //	DECLARATIONS							//

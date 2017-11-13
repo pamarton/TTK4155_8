@@ -171,6 +171,12 @@
     <Compile Include="IRsensor.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="SD_card.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SD_card.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="servo_driver.c">
       <SubType>compile</SubType>
     </Compile>
@@ -184,6 +190,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="pwm.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="sounds.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="sounds.h">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>
