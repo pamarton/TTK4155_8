@@ -30,6 +30,8 @@ NODE1.c
 
 oled.c
 
+scoreboard.c
+
 SRAM.c
 
 timer.c

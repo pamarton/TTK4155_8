@@ -51,6 +51,7 @@ C_SRCS +=  \
 ../menu.c \
 ../NODE1.c \
 ../oled.c \
+../scoreboard.c \
 ../SRAM.c \
 ../timer.c
 
@@ -76,6 +77,7 @@ interrupts.o \
 menu.o \
 NODE1.o \
 oled.o \
+scoreboard.o \
 SRAM.o \
 timer.o
 
@@ -94,6 +96,7 @@ interrupts.o \
 menu.o \
 NODE1.o \
 oled.o \
+scoreboard.o \
 SRAM.o \
 timer.o
 
@@ -112,6 +115,7 @@ interrupts.d \
 menu.d \
 NODE1.d \
 oled.d \
+scoreboard.d \
 SRAM.d \
 timer.d
 
@@ -130,6 +134,7 @@ interrupts.d \
 menu.d \
 NODE1.d \
 oled.d \
+scoreboard.d \
 SRAM.d \
 timer.d
 
@@ -147,6 +152,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

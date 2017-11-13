@@ -11,7 +11,7 @@
 #include "input_conversion.h"
 #include <avr/io.h>
 
-char edited = 0b00000000;//11111111; //so that the screen updates on first go
+
 char startram = 0;
 
 volatile char *oled_cmd = (char *) 0x1000; // Start address for the OLED_Command

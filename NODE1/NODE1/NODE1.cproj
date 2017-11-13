@@ -210,6 +210,12 @@
     <Compile Include="oled.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="scoreboard.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="scoreboard.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="SRAM.c">
       <SubType>compile</SubType>
     </Compile>
