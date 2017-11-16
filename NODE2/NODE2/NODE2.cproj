@@ -159,6 +159,12 @@
       <SubType>compile</SubType>
       <Link>uart.h</Link>
     </Compile>
+    <Compile Include="adc.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="adc.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="buzzer.c">
       <SubType>compile</SubType>
     </Compile>
@@ -169,6 +175,18 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="IRsensor.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="max520.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="max520.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="motor.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="motor.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="SD_card.c">
@@ -196,6 +214,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="sounds.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="TWI_Master.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="TWI_Master.h">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>

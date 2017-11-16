@@ -19,50 +19,25 @@ void bootscreen(void);
 #include "game_2048.h"
 #include "scoreboard.h"
 
+
+#include "../../common_library/uart.h"
 int main(void)
 {
-	scoreboard_init();
-	//init_all();
-	//http://www.dreamdealer.nl/tutorials/connecting_a_1602a_lcd_display_and_a_light_sensor_to_arduino_uno.html
+	//scoreboard_init();
+	init_all();
+	//http: //www.dreamdealer.nl/tutorials/connecting_a_1602a_lcd_display_and_a_light_sensor_to_arduino_uno.html
 	//sram_update_oled();
 	
 	//scoreboard_command(1);
-	_delay_ms(1000);
+	//_delay_ms(1000);
+	printf("UART");
 	
-	scoreboard_write(0b00110000);
-	scoreboard_write(0b00110000);
-	scoreboard_write(0b00110000);
-	scoreboard_write(0b00110000);
-	scoreboard_write(0b00110000);
-	scoreboard_write(0b00110000);
-	scoreboard_write(0b00110000);
-	scoreboard_write(0b00110000);
-	scoreboard_write(0b00110000);
-	scoreboard_write(0b00110000);
-	scoreboard_write(0b00110000);
-	scoreboard_write(0b00110000);
-	scoreboard_write(0b00110000);
-	scoreboard_write(0b00110000);
-	scoreboard_write(0b00110000);
-	scoreboard_write(0b00110000);
-	scoreboard_write(0b00110000);
-	scoreboard_write(0b00110000);
-	scoreboard_write(0b00110000);
-	scoreboard_write(0b00110000);
-	scoreboard_write(0b00110000);
-	scoreboard_write(0b00110000);
-	scoreboard_write(0b00110000);
-	scoreboard_write(0b00110000);
-	scoreboard_write(0b00110000);
-	scoreboard_write(0b00110000);
 	//timer_delay(500);
 	
 	//sram_init();
 	//main_2048();
 	
-	while(1){
-		
-	}
+	
 	uint8_t temp[8] = {1,2,3,4,5,6,7,8};
 	uint8_t *data = temp;
 

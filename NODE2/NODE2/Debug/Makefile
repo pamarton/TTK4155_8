@@ -42,13 +42,16 @@ C_SRCS +=  \
 ../../../common_library/MCP2515_driver.c \
 ../../../common_library/SPI.c \
 ../../../common_library/uart.c \
+../adc.c \
 ../buzzer.c \
 ../IRsensor.c \
+../motor.c \
 ../SD_card.c \
 ../servo_driver.c \
 ../NODE2.c \
 ../pwm.c \
-../sounds.c
+../sounds.c \
+../TWI_Master.c
 
 
 PREPROCESSING_SRCS += 
@@ -63,13 +66,16 @@ i_o.o \
 MCP2515_driver.o \
 SPI.o \
 uart.o \
+adc.o \
 buzzer.o \
 IRsensor.o \
+motor.o \
 SD_card.o \
 servo_driver.o \
 NODE2.o \
 pwm.o \
-sounds.o
+sounds.o \
+TWI_Master.o
 
 OBJS_AS_ARGS +=  \
 can.o \
@@ -77,13 +83,16 @@ i_o.o \
 MCP2515_driver.o \
 SPI.o \
 uart.o \
+adc.o \
 buzzer.o \
 IRsensor.o \
+motor.o \
 SD_card.o \
 servo_driver.o \
 NODE2.o \
 pwm.o \
-sounds.o
+sounds.o \
+TWI_Master.o
 
 C_DEPS +=  \
 can.d \
@@ -91,13 +100,16 @@ i_o.d \
 MCP2515_driver.d \
 SPI.d \
 uart.d \
+adc.d \
 buzzer.d \
 IRsensor.d \
+motor.d \
 SD_card.d \
 servo_driver.d \
 NODE2.d \
 pwm.d \
-sounds.d
+sounds.d \
+TWI_Master.d
 
 C_DEPS_AS_ARGS +=  \
 can.d \
@@ -105,13 +117,16 @@ i_o.d \
 MCP2515_driver.d \
 SPI.d \
 uart.d \
+adc.d \
 buzzer.d \
 IRsensor.d \
+motor.d \
 SD_card.d \
 servo_driver.d \
 NODE2.d \
 pwm.d \
-sounds.d
+sounds.d \
+TWI_Master.d
 
 OUTPUT_FILE_PATH +=NODE2.elf
 
@@ -127,6 +142,12 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
+
+
+
+
 
 
 

@@ -12,9 +12,13 @@
 
 ..\..\common_library\uart.c
 
+adc.c
+
 buzzer.c
 
 IRsensor.c
+
+motor.c
 
 SD_card.c
 
@@ -25,4 +29,6 @@ NODE2.c
 pwm.c
 
 sounds.c
+
+TWI_Master.c
 
