@@ -1,20 +1,41 @@
 /*
  * timer.c
  *
- * Created: 13.11.2017 08:57:38
- *  Author: pamarton
+ * Created: 17/10/2017 16:04:36
+ *  Author: Amund Marton
  */ 
 
 #include "timer.h"
 
 uint8_t FLAG_timer_1_complete;
 
-void initialize_timer(uint8_t fps){	//	Function for initialization of the timers
-	TIMSK |= (1<<OCIE0);//when timer is the same as OCR0 it sends an interrupt
-	TCCR1A |= (1<<WGM11)//				WGM11: set mode to CTC (reset timer on OCR0)     
-	TCCR1B |= (1<<CS12)|(1<<CS10);//	CS0n:set prescaler (to 1024)
-	OCR1A = (F_CPU/PRESCALER)/fps;//-> 4800Hz. Then we just need to count to (4800Hz/Desired_Fps) to get the amount we need count to. (60fps -> 80)
-	FLAG_timer_1_complete = 1;//since we are initializing we want to refresh the page
+void initialize_timer(uint16_t timer_frequency){	//	Function for initialization of the timers
+	TIMSK4 |= (1<<OCIE4A);//when timer is the same as OCR4A it sends an interrupt
+	
+	TCNT4 = 0x0000; //resetiing timer
+	
+	TCCR4B |= (1<<WGM42); //CTC mode 
+	TCCR4B &= ~(1<<WGM43); //CTC mode
+	
+	
+	#if TIMER_PRESCALER == 1//Set prescaler
+		TCCR4B |= (1<<CS40);
+	#elif TIMER_PRESCALER == 8
+		TCCR4B |= (1<<CS41);
+	#elif TIMER_PRESCALER == 64
+		TCCR4B |= (1<<CS41)|(1<<CS40);
+	#elif TIMER_PRESCALER == 256
+		TCCR4B |= (1<<CS42);
+	#elif TIMER_PRESCALER == 1024
+		TCCR4B |= (1<<CS42)|(1<<CS40);
+	#endif
+	
+	
+	TCCR4A |= (1<< COM4A1);//ENABLES OUTPUT, REMOVE THIS LATER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	
+	
+	OCR4A = (F_CPU/(TIMER_PRESCALER))/timer_frequency - 1;
+	FLAG_timer_1_complete = 0;
 }
 
 uint8_t timer_check_flag(void){	//	function for getting the value of the timer
@@ -26,20 +47,15 @@ uint8_t timer_check_flag(void){	//	function for getting the value of the timer
 	return 0;
 }
 
-void timer_disable_flag(void){	//	function for getting the value of the timer
+void timer_reset_flag(void){	//	function for getting the value of the timer
 	FLAG_timer_1_complete = 0;
 }
 
-ISR(TIMER1_COMPA_vect){//interrupt when Timer_0 is done, resets itself
+ISR(TIMER4_COMPA_vect){//interrupt when Timer_0 is done, resets itself
 	FLAG_timer_1_complete = 1;
+	TIFR4 &= ~(1<<OCF1A);
 }
 
 void timer_delay(int timer_ms){ //simple delay function, in miliseconds
-	timer_ms = (FPS*((double)timer_ms/1000));
-	while(timer_ms>0){
-		if (timer_check_flag())
-		{
-			timer_ms--;
-		}
-	}
+	//REMOVED
 }

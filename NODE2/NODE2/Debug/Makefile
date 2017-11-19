@@ -45,12 +45,15 @@ C_SRCS +=  \
 ../adc.c \
 ../buzzer.c \
 ../IRsensor.c \
+../max520.c \
 ../motor.c \
+../pi_controller.c \
 ../SD_card.c \
 ../servo_driver.c \
 ../NODE2.c \
 ../pwm.c \
 ../sounds.c \
+../timer.c \
 ../TWI_Master.c
 
 
@@ -69,12 +72,15 @@ uart.o \
 adc.o \
 buzzer.o \
 IRsensor.o \
+max520.o \
 motor.o \
+pi_controller.o \
 SD_card.o \
 servo_driver.o \
 NODE2.o \
 pwm.o \
 sounds.o \
+timer.o \
 TWI_Master.o
 
 OBJS_AS_ARGS +=  \
@@ -86,12 +92,15 @@ uart.o \
 adc.o \
 buzzer.o \
 IRsensor.o \
+max520.o \
 motor.o \
+pi_controller.o \
 SD_card.o \
 servo_driver.o \
 NODE2.o \
 pwm.o \
 sounds.o \
+timer.o \
 TWI_Master.o
 
 C_DEPS +=  \
@@ -103,12 +112,15 @@ uart.d \
 adc.d \
 buzzer.d \
 IRsensor.d \
+max520.d \
 motor.d \
+pi_controller.d \
 SD_card.d \
 servo_driver.d \
 NODE2.d \
 pwm.d \
 sounds.d \
+timer.d \
 TWI_Master.d
 
 C_DEPS_AS_ARGS +=  \
@@ -120,12 +132,15 @@ uart.d \
 adc.d \
 buzzer.d \
 IRsensor.d \
+max520.d \
 motor.d \
+pi_controller.d \
 SD_card.d \
 servo_driver.d \
 NODE2.d \
 pwm.d \
 sounds.d \
+timer.d \
 TWI_Master.d
 
 OUTPUT_FILE_PATH +=NODE2.elf
@@ -142,6 +157,12 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
+
+
+
+
 
 
 

@@ -35,7 +35,7 @@ void CAN_initialize(void){
 	
 	#if UART_ENABLE
 		printf("MCP_CANSTAT: %i\n", MCP2515_read(MCP_CANSTAT));//comment out later
-		printf("CAN initialized.\n\n");
+		printf("CAN initialized.\n");
 	#endif
 }
 
@@ -92,7 +92,7 @@ uint8_t CAN_data_receive(void) {
 				CAN_receive_buffer.data[m] =  CAN_read(RXBnDM + m);
 			}
 		}
-		#if UART_ENABLE || 1
+		#if UART_ENABLE == 1
 			printf("\nRECIVED MESSAGE:");
 			CAN_print(CAN_receive_buffer);
 		#endif

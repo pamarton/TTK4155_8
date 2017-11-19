@@ -18,7 +18,11 @@ buzzer.c
 
 IRsensor.c
 
+max520.c
+
 motor.c
+
+pi_controller.c
 
 SD_card.c
 
@@ -29,6 +33,8 @@ NODE2.c
 pwm.c
 
 sounds.c
+
+timer.c
 
 TWI_Master.c
 

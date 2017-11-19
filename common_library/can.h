@@ -39,7 +39,7 @@
 typedef struct CAN_message_t{
 	int id;
 	uint8_t length;
-	int8_t data[CAN_MESSAGE_LENGTH];
+	uint8_t data[CAN_MESSAGE_LENGTH];
 } CAN_message_t;
 
 //------------------------------------------//

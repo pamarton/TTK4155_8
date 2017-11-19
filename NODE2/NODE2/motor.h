@@ -26,15 +26,17 @@
 #define ENCODER_PIN PINK
 #define ENCODER_DDR DDRK
 
-#define ADC_ADDRESS 0x28
+#define ADC_ADDRESS 0x50
 #define ADC_DAC0_ADDRESS 0x00
 #define ADC_DAC1_ADDRESS 0x01
 
 void motor_init(void);
 void motor_set_direction(int8_t direction);
-uint16_t encoder_read(void);
+int16_t encoder_read(void);
 void motor_set_speed(uint8_t speed);
 void encoder_reset(void);
+
+int16_t e_r(void);
 
 
 #endif /* MOTOR_H_ */

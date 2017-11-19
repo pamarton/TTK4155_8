@@ -19,11 +19,18 @@
 #include "TWI_Master.h"
 #include "motor.h"
 void init_all(void);
+#include "timer.h"
+#include "../../common_library/uart.h"//REMOVE ME
 
 int main(void){
-	init_all();
 	
-	printf("Hallo\n");
+	init_UART();
+	
+	printf("all\n");
+	init_all();
+	printf("timer\n");
+	initialize_timer(1);
+	printf("servo\n");
 	servo_init();
 	
 	
@@ -36,7 +43,13 @@ int main(void){
 	IR_init();
 	
 	init_all();
-	
+	int omg = 0;
+	while(0){
+		if(timer_check_flag()){
+			printf("%i\n",omg++);
+			
+		}
+	}
 	
 	
 	//SD_CARD
@@ -49,34 +62,64 @@ int main(void){
 	
 	
 	//uint8_t temp[8] = {1,2,3,4,5,6,7,8};
-	//uint8_t *data = temp;
+	//int8_t *data = temp;
 
 	uint8_t sendCAN = 0;
-	uint8_t speed = 50;
+	int8_t speed = 0;
 	uint8_t direction = 1;
+
 	while(1){
-		/*
+		
 		if(sendCAN){
 			//CAN_message_send(data,0);
 			//data[7]--;
 		}
+		
+		/*
 		if(CAN_data_receive()){
+			//printf("CAN value = %i", CAN_message_receive()->data[0]);
+			speed =  (int8_t)  CAN_message_receive()->data[0];
+			//printf("Speed: %i", speed);
+			
+			if(speed < 0 ){
+				direction = -1;
+				speed *= -1;
+			}else{
+				direction = 1;
+				speed *= 1;
+			}
+			//printf("E_r\t%i\n", encoder_read());
+				
 			//_delay_ms(1000);
 			//sound_play_effect(1);
 			
 			//servo_set(CAN_message_receive()->data[0]);
 		}
+		/*
+		for(uint8_t i = 0; i< 0xff; i++){
+			speed = i;
+			_delay_ms(10);
+			motor_set_speed(speed);
+		}
 		*/
+		//printf("A");
+		encoder_read();
 		//read_adc();
 		//printf("IR 	%i\n", ADCH);
-		direction = -1 * direction;
-		motor_set_direction(direction);
+		
+		//motor_set_direction(direction);
+		
+		//motor_set_speed(speed);
+		//_delay_ms(1000);
+		
+		//motor_set_speed(speed);
+		//_delay_ms(1000);
 		
 		
-		motor_set_speed(0);
-		//_delay_ms(100);
+		//speed += 1;
 		//motor_set_speed(0);
 		//_delay_ms(50);
+		
 		
 	}
     return 0;

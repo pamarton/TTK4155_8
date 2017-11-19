@@ -23,12 +23,9 @@ double player_height_accurate = 0;
 uint8_t difficulity = 100;
 uint8_t new_wall = 100;
 
-uint8_t can_data[8] = {20,2,0,0,0,0,0,0};
 int flappy_main(void){
 	srand(TCNT0); //using the clock counter for this, to give an approximated random value each time
 	quit = 0;
-	CAN_construct_message(50,8);
-	CAN_message_send(can_data,0);
 	flappy_loading_screen();
 
 	while (quit != 1){
@@ -88,15 +85,18 @@ void flappy_restart(void){
 	sram_write_string("BACK        PLAY");
 	sram_update_oled();
 	quit = 0;
+	printf("MP");
 	while (!(quit | check_flag_right()))
 	{
 		quit = check_flag_left();
 	}
+	
 	sram_init();
 }
 
 void flappy_game(void){
 	sram_update_oled();
+	printf("M1");
 	while (!flappy_pixel_collision() && !game_over)
 	
 	{
@@ -111,6 +111,7 @@ void flappy_game(void){
 			sram_goto_column(0);
 			sram_write_char('S');
 			int tempscore = score;
+			printf("MP");
 			for (uint8_t i = 5; i > 1; i--)
 			{
 				sram_goto_line(i);
@@ -129,10 +130,10 @@ void flappy_game(void){
 			while(!(check_flag_left() | check_flag_right())){
 				
 			}
+			printf("MR");
 		}
 	}
-	can_data[0] = 1;
-	CAN_message_send(can_data,0);
+	printf("M2");
 	timer_delay(1000);
 	sram_init();
 	sram_goto_line(0);

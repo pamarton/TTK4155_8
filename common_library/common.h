@@ -44,7 +44,7 @@
 	#define UART_ENABLE 0
 #elif NODE == 2
 	#define F_CPU 16000000	// clock frequency in Hz
-	#define UART_ENABLE 1
+	#define UART_ENABLE 0
 #endif
 
 

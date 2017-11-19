@@ -18,6 +18,6 @@ void max520_init(void){
 
 void max520_send(uint8_t val){
 	
-	unsigned char msg[3] = {0b01011100,0,val}; //hardcoded slave address
+	unsigned char msg[3] = {0b01010000,0,val}; //hardcoded slave address
 		TWI_Start_Transceiver_With_Data(msg,3);
 }
