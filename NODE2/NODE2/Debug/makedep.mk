@@ -36,5 +36,7 @@ solenoid.c
 
 sounds.c
 
+timer.c
+
 TWI_Master.c
 

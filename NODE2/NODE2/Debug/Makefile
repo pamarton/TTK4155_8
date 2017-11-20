@@ -54,6 +54,7 @@ C_SRCS +=  \
 ../pwm.c \
 ../solenoid.c \
 ../sounds.c \
+../timer.c \
 ../TWI_Master.c
 
 
@@ -81,6 +82,7 @@ NODE2.o \
 pwm.o \
 solenoid.o \
 sounds.o \
+timer.o \
 TWI_Master.o
 
 OBJS_AS_ARGS +=  \
@@ -101,6 +103,7 @@ NODE2.o \
 pwm.o \
 solenoid.o \
 sounds.o \
+timer.o \
 TWI_Master.o
 
 C_DEPS +=  \
@@ -121,6 +124,7 @@ NODE2.d \
 pwm.d \
 solenoid.d \
 sounds.d \
+timer.d \
 TWI_Master.d
 
 C_DEPS_AS_ARGS +=  \
@@ -141,6 +145,7 @@ NODE2.d \
 pwm.d \
 solenoid.d \
 sounds.d \
+timer.d \
 TWI_Master.d
 
 OUTPUT_FILE_PATH +=NODE2.elf
@@ -157,6 +162,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

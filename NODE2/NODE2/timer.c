@@ -7,55 +7,51 @@
 
 #include "timer.h"
 
-uint8_t FLAG_timer_1_complete;
+uint8_t update_flag;
 
-void initialize_timer(uint16_t timer_frequency){	//	Function for initialization of the timers
-	TIMSK4 |= (1<<OCIE4A);//when timer is the same as OCR4A it sends an interrupt
+void initialize_timer(float T_Update){
 	
-	TCNT4 = 0x0000; //resetiing timer
+	//Enable interrupt. When timer is the same as OCR4A it sends an interrupt.
+	TIMSK4 |= (1<<OCIE4A);
 	
-	TCCR4B |= (1<<WGM42); //CTC mode 
-	TCCR4B &= ~(1<<WGM43); //CTC mode
+	// Reset timer.
+	TCNT4 = 0x0000;
 	
+	// Use CTC mode.
+	TCCR4B |= (1<<WGM42);
+	TCCR4B &= ~(1<<WGM43);
 	
-	#if TIMER_PRESCALER == 1//Set prescaler
-		TCCR4B |= (1<<CS40);
+	//Set prescaler.
+	#if TIMER_PRESCALER == 1
+	TCCR4B |= (1<<CS40);
 	#elif TIMER_PRESCALER == 8
-		TCCR4B |= (1<<CS41);
+	TCCR4B |= (1<<CS41);
 	#elif TIMER_PRESCALER == 64
-		TCCR4B |= (1<<CS41)|(1<<CS40);
+	TCCR4B |= (1<<CS41)|(1<<CS40);
 	#elif TIMER_PRESCALER == 256
-		TCCR4B |= (1<<CS42);
+	TCCR4B |= (1<<CS42);
 	#elif TIMER_PRESCALER == 1024
-		TCCR4B |= (1<<CS42)|(1<<CS40);
+	TCCR4B |= (1<<CS42)|(1<<CS40);
 	#endif
 	
-	TCCR4A |= (1<< COM4A1);//ENABLES OUTPUT, REMOVE THIS LATER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	
-	OCR4A = (F_CPU/(TIMER_PRESCALER))/timer_frequency - 1;
-	FLAG_timer_1_complete = 0;
-}
-
-uint8_t timer_check_flag(void){	//	function for getting the value of the timer
-	if (FLAG_timer_1_complete == 1)
-	{
-		FLAG_timer_1_complete = 0;
-		return 1;
-	}
-	return 0;
-}
-
-void timer_reset_flag(void){	//	function for getting the value of the timer
-	FLAG_timer_1_complete = 0;
+	
+	// Set counter limit.
+	OCR4A = (F_CPU/(TIMER_PRESCALER))*T_Update - 1;
+	update_flag = 0;
 }
 
 ISR(TIMER4_COMPA_vect){//interrupt when Timer_0 is done, resets itself
-	FLAG_timer_1_complete = 1;
-	TIFR4 &= ~(1<<OCF1A);
+	update_flag = 1;
+	//printf("INT");
+	//TIFR4 &= ~(1<<OCF1A);
 }
 
-
-
-void timer_delay(int timer_ms){ //simple delay function, in miliseconds
-	//REMOVED
+uint8_t timer_check_flag(void){
+	if (update_flag)
+	{
+		update_flag = 0;
+		return 1;
+	}
+	return 0;
 }

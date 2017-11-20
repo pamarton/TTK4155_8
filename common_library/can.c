@@ -93,7 +93,7 @@ uint8_t CAN_data_receive(void) {
 				CAN_receive_buffer.data[m] =  CAN_read(RXBnDM + m);
 			}
 		}
-		#if UART_ENABLE == 1
+		#if UART_ENABLE
 			printf("\nRECIVED MESSAGE:");
 			CAN_print(CAN_receive_buffer);
 		#endif
@@ -140,8 +140,6 @@ void CAN_interrupt_setup(void){
 		EIMSK |= (1<<INT4);
 
 		//Enable global interrupt.
-		
-	
 	#endif
 	sei();
 }

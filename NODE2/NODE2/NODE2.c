@@ -25,111 +25,42 @@ void init_all(void);
 
 int main(void){
 	
-	
-
 	init_all();
 
-	while (1)
-	{
-			//servo_set(CAN_message_receive()->data[0]);
-		servo_set(-100);
-		
-	}
-	
-	
-	
-	printf("solenoid\n");
-	solenoid_init();
-	
-	while(0){
-		solenoid_enable();
-		_delay_ms(50);
-		solenoid_disable();
-		_delay_ms(1000);
-	}
-	
-	IR_init();
-	
-	init_all();
-	/*
-	twos_compliment_decode(0,0);
-	twos_compliment_decode(0,127);
-	twos_compliment_decode(0,128);
-	twos_compliment_decode(0,129);
-	twos_compliment_decode(0,255);
-	twos_compliment_decode(128,0);
-	twos_compliment_decode(128,127);
-	twos_compliment_decode(128,128);
-	twos_compliment_decode(128,129);*/
-	
-	//uint8_t temp[8] = {1,2,3,4,5,6,7,8};
-	//int8_t *data = temp;
-
-	uint8_t sendCAN = 0;
-	int8_t speed = 0;
+	int8_t motor_speed = 0;
 	int8_t direction = 0.1;
 
-	pi_controller_init(0.5,1,T_UPDATE);
-	
-
-
-	//motor_calibrate(100);
-	
-	
 	while(1){
-		if(sendCAN){
-			//CAN_message_send(data,0);
-			//data[7]--;
-		}
-		
-		
 		if(CAN_data_receive()){
 			//printf("CAN value = %i", CAN_message_receive()->data[0]);
-			speed =  (int8_t)  CAN_message_receive()->data[0];
+			motor_speed =  (int8_t)  CAN_message_receive()->data[0];
 			
-			if(speed < 0 ){
+			
+			if(motor_speed < 0 ){
 				direction = 1;
-				speed = direction * speed;
-			}else if(speed > 0){
+				motor_speed = direction * motor_speed;
+			}else if(motor_speed > 0){
 				direction = -1;
-				speed = direction * speed;
+				motor_speed = direction * motor_speed;
 			}else{
-				speed = 0;
+				motor_speed = 0;
 				direction = 0;
 			}
-			
-			//printf("E_r\t%i\n", encoder_read());
-				
-			//_delay_ms(1000);
-			//sound_play_effect(1);
-			
+
+			printf("motor_speed: %i\n", motor_speed);
 			//servo_set(CAN_message_receive()->data[0]);
 		}
-		/*
-		for(uint8_t i = 0; i< 0xff; i++){
-			speed = i;
-			_delay_ms(10);
-			motor_set_speed(speed);
-		}
-		*/
+		
 		//printf("A");
 		
 		//read_adc();
 		//printf("IR 	%i\n", ADCH);
 		//encoder_read();
-		pi_controller_update(speed);
+		
+		double smotor_speed = 0.2;
+		
+		pi_controller_update(smotor_speed * motor_speed);
 		motor_set_direction(direction);
-		
-		//_delay_ms(1000);
-		
-		//motor_set_speed(speed);
-		//_delay_ms(1000);
-		
-		
-		//speed += 1;
-		//motor_set_speed(0);
-		//_delay_ms(50);
-		
 		
 	}
     return 0;
@@ -141,10 +72,22 @@ void init_all(void){
 	init_UART();
 	
 	CAN_initialize();
+	printf("CAN initialized\n");
 	TWI_Master_Initialise();
-	motor_init();
+	printf("TWI initialized\n");
+	//Motor is being initialized by PI-Controller.
+	//motor_init();
+	//printf("Motor initialized\n");
 	servo_init();
-	
+	printf("Servo initialized\n");
+	IR_init();
+	printf("IR initialized\n");
+	//printf("solenoid\n");
+	solenoid_init();
+	printf("Solenoid initialized\n");
+	pi_controller_init(0.1,1,T_UPDATE);
+	printf("PI_Controller initialized.\n");
+	//pi_controller_init(5,1,T_UPDATE);
 	#if UART_ENABLE
 		init_UART();
 		printf("Program initialized\n");

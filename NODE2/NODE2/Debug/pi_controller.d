@@ -17,7 +17,7 @@ pi_controller.d pi_controller.o: .././pi_controller.c \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\stdio.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\lib\gcc\avr\4.8.1\include\stdarg.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\lib\gcc\avr\4.8.1\include\stddef.h \
- .././../../common_library/common.h .././motor.h
+ .././../../common_library/common.h .././motor.h .././timer.h
 
 .././pi_controller.h:
 
@@ -60,3 +60,5 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-g
 .././../../common_library/common.h:
 
 .././motor.h:
+
+.././timer.h:

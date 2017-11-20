@@ -22,11 +22,10 @@
 //	DECLARATIONS							//
 //------------------------------------------//
 
-void initialize_timer(uint16_t timer_frequency);	//	Function for initialization of the timers 
-uint8_t timer_check_flag(void);	//	function for checking the flag
-void timer_reset_flag(void); //	function for disabling the flag
-void timer_delay(int timer_ms);
 
+void initialize_timer(float T_Update);
+ISR(TIMER4_COMPA_vect);//interrupt when Timer_0 is done
+uint8_t timer_check_flag(void);
 //------------------------------------------//
 //	INTERRUPTS								//
 //------------------------------------------//
