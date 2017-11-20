@@ -32,9 +32,9 @@ NODE2.c
 
 pwm.c
 
-sounds.c
+solenoid.c
 
-timer.c
+sounds.c
 
 TWI_Master.c
 

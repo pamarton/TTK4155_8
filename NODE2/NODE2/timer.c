@@ -30,9 +30,7 @@ void initialize_timer(uint16_t timer_frequency){	//	Function for initialization 
 		TCCR4B |= (1<<CS42)|(1<<CS40);
 	#endif
 	
-	
 	TCCR4A |= (1<< COM4A1);//ENABLES OUTPUT, REMOVE THIS LATER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	
 	
 	OCR4A = (F_CPU/(TIMER_PRESCALER))/timer_frequency - 1;
 	FLAG_timer_1_complete = 0;
@@ -55,6 +53,8 @@ ISR(TIMER4_COMPA_vect){//interrupt when Timer_0 is done, resets itself
 	FLAG_timer_1_complete = 1;
 	TIFR4 &= ~(1<<OCF1A);
 }
+
+
 
 void timer_delay(int timer_ms){ //simple delay function, in miliseconds
 	//REMOVED

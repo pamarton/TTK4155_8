@@ -30,11 +30,20 @@
 #define ADC_DAC0_ADDRESS 0x00
 #define ADC_DAC1_ADDRESS 0x01
 
+#define MOTOR_POLARITY 1
+
+#define T_UPDATE 0.02
+
 void motor_init(void);
 void motor_set_direction(int8_t direction);
 int16_t encoder_read(void);
 void motor_set_speed(uint8_t speed);
 void encoder_reset(void);
+int16_t twos_compliment_decode(uint8_t msb, uint8_t lsb);
+void motor_calibrate(uint8_t speed);
+int16_t motor_goto_end(uint8_t speed, int8_t direction);
+int16_t motor_get_position();
+int16_t motor_get_velocity();
 
 int16_t e_r(void);
 

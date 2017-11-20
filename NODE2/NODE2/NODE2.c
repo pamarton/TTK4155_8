@@ -16,78 +16,88 @@
 #include	"buzzer.h"
 #include	"SD_card.h"
 #include	"sounds.h"
-#include "TWI_Master.h"
-#include "motor.h"
+#include	"TWI_Master.h"
+#include	"motor.h"
 void init_all(void);
-#include "timer.h"
-#include "../../common_library/uart.h"//REMOVE ME
+#include	"../../common_library/uart.h"//REMOVE ME
+#include	"pi_controller.h"
+#include	"solenoid.h"
 
 int main(void){
 	
-	init_UART();
 	
-	printf("all\n");
+
 	init_all();
-	printf("timer\n");
-	initialize_timer(1);
-	printf("servo\n");
-	servo_init();
-	
-	
-	/*
-	buzzer_init();
-	buzzer_set_freq(100);
-	_delay_ms(200);
-	buzzer_of();
-	*/
-	IR_init();
-	
-	init_all();
-	int omg = 0;
-	while(0){
-		if(timer_check_flag()){
-			printf("%i\n",omg++);
-			
-		}
+
+	while (1)
+	{
+			//servo_set(CAN_message_receive()->data[0]);
+		servo_set(-100);
+		
 	}
 	
 	
-	//SD_CARD
-	//SD_initialize();
-	//SD_test();
 	
-	//END SD_CARD
+	printf("solenoid\n");
+	solenoid_init();
 	
+	while(0){
+		solenoid_enable();
+		_delay_ms(50);
+		solenoid_disable();
+		_delay_ms(1000);
+	}
 	
+	IR_init();
 	
+	init_all();
+	/*
+	twos_compliment_decode(0,0);
+	twos_compliment_decode(0,127);
+	twos_compliment_decode(0,128);
+	twos_compliment_decode(0,129);
+	twos_compliment_decode(0,255);
+	twos_compliment_decode(128,0);
+	twos_compliment_decode(128,127);
+	twos_compliment_decode(128,128);
+	twos_compliment_decode(128,129);*/
 	
 	//uint8_t temp[8] = {1,2,3,4,5,6,7,8};
 	//int8_t *data = temp;
 
 	uint8_t sendCAN = 0;
 	int8_t speed = 0;
-	uint8_t direction = 1;
+	int8_t direction = 0.1;
 
+	pi_controller_init(0.5,1,T_UPDATE);
+	
+
+
+	//motor_calibrate(100);
+	
+	
 	while(1){
-		
 		if(sendCAN){
 			//CAN_message_send(data,0);
 			//data[7]--;
 		}
 		
-		/*
+		
 		if(CAN_data_receive()){
 			//printf("CAN value = %i", CAN_message_receive()->data[0]);
 			speed =  (int8_t)  CAN_message_receive()->data[0];
-			//printf("Speed: %i", speed);
 			
 			if(speed < 0 ){
-				direction = -1;
-				speed *= -1;
-			}else{
 				direction = 1;
-				speed *= 1;
+				speed = direction * speed;
+			}else if(speed > 0){
+				direction = -1;
+				speed = direction * speed;
+			}else{
+				speed = 0;
+				direction = 0;
 			}
+			
 			//printf("E_r\t%i\n", encoder_read());
 				
 			//_delay_ms(1000);
@@ -103,13 +113,13 @@ int main(void){
 		}
 		*/
 		//printf("A");
-		encoder_read();
+		
 		//read_adc();
 		//printf("IR 	%i\n", ADCH);
+		//encoder_read();
+		pi_controller_update(speed);
+		motor_set_direction(direction);
 		
-		//motor_set_direction(direction);
-		
-		//motor_set_speed(speed);
 		//_delay_ms(1000);
 		
 		//motor_set_speed(speed);
@@ -128,11 +138,12 @@ int main(void){
 void init_all(void){
 	
 	cli();
+	init_UART();
 	
 	CAN_initialize();
 	TWI_Master_Initialise();
 	motor_init();
-	
+	servo_init();
 	
 	#if UART_ENABLE
 		init_UART();

@@ -52,8 +52,8 @@ C_SRCS +=  \
 ../servo_driver.c \
 ../NODE2.c \
 ../pwm.c \
+../solenoid.c \
 ../sounds.c \
-../timer.c \
 ../TWI_Master.c
 
 
@@ -79,8 +79,8 @@ SD_card.o \
 servo_driver.o \
 NODE2.o \
 pwm.o \
+solenoid.o \
 sounds.o \
-timer.o \
 TWI_Master.o
 
 OBJS_AS_ARGS +=  \
@@ -99,8 +99,8 @@ SD_card.o \
 servo_driver.o \
 NODE2.o \
 pwm.o \
+solenoid.o \
 sounds.o \
-timer.o \
 TWI_Master.o
 
 C_DEPS +=  \
@@ -119,8 +119,8 @@ SD_card.d \
 servo_driver.d \
 NODE2.d \
 pwm.d \
+solenoid.d \
 sounds.d \
-timer.d \
 TWI_Master.d
 
 C_DEPS_AS_ARGS +=  \
@@ -139,8 +139,8 @@ SD_card.d \
 servo_driver.d \
 NODE2.d \
 pwm.d \
+solenoid.d \
 sounds.d \
-timer.d \
 TWI_Master.d
 
 OUTPUT_FILE_PATH +=NODE2.elf

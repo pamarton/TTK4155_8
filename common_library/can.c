@@ -26,6 +26,7 @@ void CAN_initialize(void){
 	
 	// RX0IE Receive Buffer 0 FUll Interrupt Enable bit
 	MCP2515_bit_modify(MCP_CANINTE,0x01,1);
+	MCP2515_bit_modify(MCP_CANINTE,0x02,1);
 	
 	//set CAN mode
 	MCP2515_bit_modify(MCP_CANCTRL, MODE_MASK, MODE_NORMAL); 
@@ -149,7 +150,9 @@ int8_t CAN_reception_complete(void){
 	//printf("MCP_CANINTF = %i",MCP2515_read(MCP_CANINTF));
 	
 	// Wait for data to be loaded into either receive buffer.
-	while(!((MCP2515_read(MCP_CANINTF) & MCP_RX0IF) | (MCP2515_read(MCP_CANINTF) & MCP_RX1IF)));
+	while(!((MCP2515_read(MCP_CANINTF) & MCP_RX0IF) || (MCP2515_read(MCP_CANINTF) & MCP_RX1IF))){
+		printf("CAN_reception_complete is stuck\n");
+		};
 	
 	
 	

@@ -27,7 +27,8 @@ NODE2.d NODE2.o: .././NODE2.c \
  .././servo_driver.h .././pwm.h .././IRsensor.h .././buzzer.h \
  .././SD_card.h .././../../common_library/uart.h \
  .././../../common_library/i_o.h .././../../common_library/MCP2515.h \
- .././sounds.h .././TWI_Master.h .././motor.h .././timer.h
+ .././sounds.h .././TWI_Master.h .././motor.h .././pi_controller.h \
+ .././solenoid.h
 
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\io.h:
 
@@ -105,4 +106,6 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-g
 
 .././motor.h:
 
-.././timer.h:
+.././pi_controller.h:
+
+.././solenoid.h:

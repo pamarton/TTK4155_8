@@ -216,16 +216,16 @@
     <Compile Include="pwm.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="solenoid.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="solenoid.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="sounds.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="sounds.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="timer.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="timer.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="TWI_Master.c">

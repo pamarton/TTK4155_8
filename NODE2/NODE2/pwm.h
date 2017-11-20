@@ -24,6 +24,13 @@
 #define PWM_PRESCALER 1024//Prescaler of the pwm
 #define SCALAR_IN_MS (double)(F_CPU/FREQ_IN_MS)/PWM_PRESCALER//Number the timer count to each milli-second
 
+#define PWM_DDR DDRE
+#define PWM_PIN PE3
+#define PWM_TCCRnA TCCR3A
+#define PWM_TCCRnB TCCR3B
+#define PWM_OCRnA OCR3A
+#define PWM_ICRn ICR3
+
 //------------------------------------------//
 //	DECLARATIONS							//
 //------------------------------------------//
