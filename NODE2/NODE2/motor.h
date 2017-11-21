@@ -35,7 +35,7 @@
 
 #define T_UPDATE 0.02
 
-void motor_init(void);
+int16_t motor_init(void);
 void motor_set_direction(int8_t direction);
 int16_t encoder_read(void);
 void motor_set_motor_speed(uint8_t motor_speed);

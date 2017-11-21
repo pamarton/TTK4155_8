@@ -27,49 +27,32 @@ int main(void){
 	
 	init_all();
 
-	int8_t motor_speed = 0;
+	uint8_t* score[CAN_GAME_SCORE_LENGTH];
+	score[2] = 1;
+	//Send score to Node1
+	CAN_construct_message(CAN_GAME_SCORE_ID, CAN_GAME_SCORE_LENGTH);
+	CAN_message_send(score,0);
 	
+	while(1){
+
+	}
 	
-	
-	
-	int8_t direction = 0.1;
 	while(1){
 		if(CAN_data_receive()){
-			pi_controller_update_reference(CAN_message_receive()->data[0]);
-			/*
-			//printf("CAN value = %i", CAN_message_receive()->data[0]);
-			motor_speed =  (int8_t)  CAN_message_receive()->data[0];
-			
-			
-			if(motor_speed < 0 ){
-				direction = 1;
-				motor_speed = direction * motor_speed;
-			}else if(motor_speed > 0){
-				direction = -1;
-				motor_speed = direction * motor_speed;
-			}else{
-				motor_speed = 0;
-				direction = 0;
+			if(CAN_message_receive()->id == CAN_GAME_PARAMS_ID){
+				game_init(CAN_message_receive()->data);
 			}
-
-			printf("motor_speed: %i\n", motor_speed);
-			//servo_set(CAN_message_receive()->data[0]);
-			*/
+			
+			if(CAN_message_receive()->id == CAN_GAME_CONTROL_ID){
+				uint8_t* score[CAN_GAME_SCORE_LENGTH];
+				score[0] = game_play();
+				//Send score to Node1
+				CAN_construct_message(CAN_GAME_SCORE_ID, CAN_GAME_SCORE_LENGTH);
+				CAN_message_send(score,0);
+			}
 		}
-		
-		//printf("A");
-		
-		//read_adc();
-		//printf("IR 	%i\n", ADCH);
-		//encoder_read();
-		
-		//double smotor_speed = 0.2;
-		
-		//pi_controller_update(smotor_speed * motor_speed);
-		//motor_set_direction(direction);
-		
 	}
-    return 0;
+	return 0;
 }
 
 void init_all(void){

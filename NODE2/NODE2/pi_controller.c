@@ -7,27 +7,51 @@
 
 #include "pi_controller.h"
 
-float errorSum;
+
 float T_Update = 1;
 float motor_speed_error;
 
-float Ki;
-float Kp;
-float u;
-uint8_t vel_ref;
+float Ki; //Integral gain
+float Kp; //Proportional gain
+float u; //Control input
+uint8_t pos_ref; //Position reference (input to control loop)
+float pos_errSum;
 
-float sMotor;
+int16_t pos_meas;
+int16_t pos_err;
+
+float sMotor; 
+float T_Update;
+int16_t pos_max;
 
 void pi_controller_init(float Ki_init, float Kp_init, float T_Update_init){
-	errorSum = 0;
-	vel_ref = 0;
+	pos_errSum = 0;
+	pos_ref = 0;
 	u = 0;
 	Ki = Ki_init;
 	Kp = Kp_init;
+	T_Update = T_Update_init;
 	
 	initialize_timer(T_Update_init);
-	motor_init();
+	pos_max = motor_init();
 }
+
+void pi_controller_update(float rel_pos_ref){
+	
+	pos_ref = rel_pos_ref * pos_max;
+	if(timer_check_flag()){
+		pos_meas = encoder_read();
+		pos_err = pos_ref - pos_meas;
+		pos_errSum  += pos_err;
+		u = Kp*pos_err + T_Update*Ki*pos_errSum;
+	}
+	motor_set_motor_speed((int16_t)u);
+}
+
+
+
+/* Tried to control speed
+
 #define CONTROLER_INPUT_MAX 100
 #define CONTROLER_INPUT_MIN 10
 
@@ -72,7 +96,7 @@ void pi_controller_update(float ctrl_in){
 }
 
 
-/*
+
 void pi_controller_update(float vel_ref){
 	
 	//vel_ref = vel_ref_in;
@@ -96,11 +120,11 @@ void pi_controller_update(float vel_ref){
 	}
 	motor_set_motor_speed((int16_t)u);
 }
-*/
+
 
 //	Function for initialization of the timers
 
-/*
+
 float pi_compute_error(float motor_speed){
 	
 	for (uint8_t i = 0; i<5; i++){

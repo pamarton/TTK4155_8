@@ -16,6 +16,8 @@ adc.c
 
 buzzer.c
 
+game.c
+
 IRsensor.c
 
 max520.c

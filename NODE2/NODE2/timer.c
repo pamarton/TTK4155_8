@@ -8,6 +8,7 @@
 #include "timer.h"
 
 uint8_t update_flag;
+uint16_t score_count;
 
 void initialize_timer(float T_Update){
 	
@@ -33,9 +34,7 @@ void initialize_timer(float T_Update){
 	#elif TIMER_PRESCALER == 1024
 	TCCR4B |= (1<<CS42)|(1<<CS40);
 	#endif
-	
-	
-	
+
 	// Set counter limit.
 	OCR4A = (F_CPU/(TIMER_PRESCALER))*T_Update - 1;
 	update_flag = 0;
@@ -43,6 +42,7 @@ void initialize_timer(float T_Update){
 
 ISR(TIMER4_COMPA_vect){//interrupt when Timer_0 is done, resets itself
 	update_flag = 1;
+	score_count++;
 	//printf("INT");
 	//TIFR4 &= ~(1<<OCF1A);
 }

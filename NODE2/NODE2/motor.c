@@ -10,7 +10,7 @@
 #include	<util/delay.h>
 #include "../../common_library/uart.h"
 
-void motor_init(void){
+int16_t motor_init(void){
 	
 	// Make all relevant motor pins output.
 	MOTOR_DDR |= (1<<OEN)|(1<<RSTN)|(1<<SEL)|(1<<EN)|(1<<DIR);
@@ -23,7 +23,8 @@ void motor_init(void){
 	
 	encoder_reset();
 	
-	motor_calibrate(150);
+	int16_t pos_max = motor_calibrate(150);
+	return pos_max;
 }
 
 void motor_set_motor_speed(uint8_t motor_speed){
@@ -125,8 +126,6 @@ float  motor_calibrate(uint8_t motor_speed){
 	printf("E_min:%i\tE_Max: %i\n",pos_min, pos_max);
 	
 	//Move sledge back and measure motor_speed.
-	
-	
 	motor_speed_max = motor_speed;
 	
 	vel_max = motor_calibrate_max_velocity(motor_speed,-MOTOR_POLARITY);
@@ -138,7 +137,7 @@ float  motor_calibrate(uint8_t motor_speed){
 	}
 	
 	//float sMotor = vel_max /(motor_speed_max - motor_speed_min);
-	return 1;
+	return pos_max;
 }
 
 int16_t motor_get_speed_range(void){
@@ -209,10 +208,6 @@ uint8_t motor_calibrate_max_velocity(uint8_t max_motor_speed, int8_t direction){
 	
 	return ((((pos_max-pos_min)/10)*6)/time_counter);
 }
-
-
-
-
 
 uint8_t motor_calibrate_min_motor_speed(int8_t direction){
 	uint16_t motor_speed = 0;

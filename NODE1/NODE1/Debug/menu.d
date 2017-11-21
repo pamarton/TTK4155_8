@@ -22,7 +22,7 @@ menu.d menu.o: .././menu.c .././menu.h .././SRAM.h .././oled.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\math.h \
  .././uart.h .././button_interrupts.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\interrupt.h \
- .././../../common_library/i_o.h .././timer.h \
+ .././../../common_library/i_o.h .././timer.h .././uart_exchange.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\stdlib.h \
  .././flappy_pixel.h .././../../common_library/can.h \
  .././../../common_library/MCP2515.h \
@@ -91,6 +91,8 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-g
 .././../../common_library/i_o.h:
 
 .././timer.h:
+
+.././uart_exchange.h:
 
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\stdlib.h:
 

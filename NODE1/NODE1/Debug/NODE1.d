@@ -27,7 +27,7 @@ NODE1.d NODE1.o: .././NODE1.c \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\avr\pgmspace.h \
  .././../../common_library/uart.h .././input_conversion.h .././adc.h \
  .././uart.h .././button_interrupts.h .././../../common_library/i_o.h \
- .././timer.h \
+ .././timer.h .././uart_exchange.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\stdlib.h \
  .././flappy_pixel.h .././game_2048.h .././scoreboard.h
 
@@ -104,6 +104,8 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-g
 .././../../common_library/i_o.h:
 
 .././timer.h:
+
+.././uart_exchange.h:
 
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\stdlib.h:
 

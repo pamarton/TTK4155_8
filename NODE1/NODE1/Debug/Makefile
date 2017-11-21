@@ -53,7 +53,8 @@ C_SRCS +=  \
 ../oled.c \
 ../scoreboard.c \
 ../SRAM.c \
-../timer.c
+../timer.c \
+../uart_exchange.c
 
 
 PREPROCESSING_SRCS += 
@@ -79,7 +80,8 @@ NODE1.o \
 oled.o \
 scoreboard.o \
 SRAM.o \
-timer.o
+timer.o \
+uart_exchange.o
 
 OBJS_AS_ARGS +=  \
 can.o \
@@ -98,7 +100,8 @@ NODE1.o \
 oled.o \
 scoreboard.o \
 SRAM.o \
-timer.o
+timer.o \
+uart_exchange.o
 
 C_DEPS +=  \
 can.d \
@@ -117,7 +120,8 @@ NODE1.d \
 oled.d \
 scoreboard.d \
 SRAM.d \
-timer.d
+timer.d \
+uart_exchange.d
 
 C_DEPS_AS_ARGS +=  \
 can.d \
@@ -136,7 +140,8 @@ NODE1.d \
 oled.d \
 scoreboard.d \
 SRAM.d \
-timer.d
+timer.d \
+uart_exchange.d
 
 OUTPUT_FILE_PATH +=NODE1.elf
 
@@ -152,6 +157,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

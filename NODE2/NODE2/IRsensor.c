@@ -66,8 +66,9 @@ uint16_t read_adc(void)
 	//read ADC somewhere
 
 	//printf("%i", ADCH); 
-	return 0;   
+	//return 0;   
 		                                    //return the ADC conversion result from the ADC Result Registers (ADCL, ADCH)
+	return ADCH;
 }
 	
 

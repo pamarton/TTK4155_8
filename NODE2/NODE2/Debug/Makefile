@@ -44,6 +44,7 @@ C_SRCS +=  \
 ../../../common_library/uart.c \
 ../adc.c \
 ../buzzer.c \
+../game.c \
 ../IRsensor.c \
 ../max520.c \
 ../motor.c \
@@ -72,6 +73,7 @@ SPI.o \
 uart.o \
 adc.o \
 buzzer.o \
+game.o \
 IRsensor.o \
 max520.o \
 motor.o \
@@ -93,6 +95,7 @@ SPI.o \
 uart.o \
 adc.o \
 buzzer.o \
+game.o \
 IRsensor.o \
 max520.o \
 motor.o \
@@ -114,6 +117,7 @@ SPI.d \
 uart.d \
 adc.d \
 buzzer.d \
+game.d \
 IRsensor.d \
 max520.d \
 motor.d \
@@ -135,6 +139,7 @@ SPI.d \
 uart.d \
 adc.d \
 buzzer.d \
+game.d \
 IRsensor.d \
 max520.d \
 motor.d \
@@ -162,6 +167,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

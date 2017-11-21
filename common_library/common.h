@@ -79,8 +79,13 @@
 #define RXBnDLC 0x65
 #define RXBnDM 0x66
 
-
-
+//------------------------------------------//
+//	CAN IDs  								//
+//------------------------------------------//
+#define CAN_GAME_PARAMS_ID 10
+#define CAN_GAME_CONTROL_ID 20
+#define CAN_GAME_SCORE_ID 30
+#define CAN_GAME_SCORE_LENGTH 3
 //------------------------------------------//
 //	DEFINITIONS FOR THE GAMES					//
 //------------------------------------------//
