@@ -19,6 +19,7 @@
 #include "input_conversion.h"
 #include "button_interrupts.h"
 #include "timer.h"
+#include "uart_exchange.h"
 #include <stdlib.h>//malloc
 
 #if FLAPPY == 1

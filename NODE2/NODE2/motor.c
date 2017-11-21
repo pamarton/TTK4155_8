@@ -23,7 +23,7 @@ void motor_init(void){
 	
 	encoder_reset();
 	
-	motor_calibrate(100);
+	motor_calibrate(150);
 }
 
 void motor_set_motor_speed(uint8_t motor_speed){
@@ -110,13 +110,15 @@ void motor_calibrate(uint8_t motor_speed){
 int16_t pos_max;
 int16_t vel_max;
 int16_t pos_min = 0;
-int16_t motor_speed_min;
+uint8_t motor_speed_min;
+uint8_t motor_speed_max;
 
-void motor_calibrate(uint8_t motor_speed){
+#define MIN_VELOCITY 10
+
+float  motor_calibrate(uint8_t motor_speed){
 	//Move sledge all the way to the right.
 	motor_goto_end(motor_speed,-MOTOR_POLARITY);
 	encoder_reset();
-
 	pos_max = motor_goto_end(motor_speed,MOTOR_POLARITY);
 	
 	//end_pos1 = motor_goto_end(motor_speed,-MOTOR_POLARITY);
@@ -125,38 +127,32 @@ void motor_calibrate(uint8_t motor_speed){
 	//Move sledge back and measure motor_speed.
 	
 	
+	motor_speed_max = motor_speed;
 	
-	
-	while (1)
-	{
-		motor_set_motor_speed(0);
-		_delay_ms(500);
-		
-		motor_set_direction(1);
-		motor_set_motor_speed(65);
-		_delay_ms(500);
-		
-		motor_set_motor_speed(0);
-		_delay_ms(500);
-		
-		motor_set_direction(-1);
-		motor_set_motor_speed(65);
-		_delay_ms(500);
-	}
-	
-	
-	
-	/*vel_max = motor_calibrate_max_velocity(motor_speed,-MOTOR_POLARITY);
+	vel_max = motor_calibrate_max_velocity(motor_speed,-MOTOR_POLARITY);
 	motor_speed_min = motor_calibrate_min_motor_speed(MOTOR_POLARITY);
 	motor_goto_end(motor_speed_min,MOTOR_POLARITY);
 	uint8_t temp_motor_speed_min = motor_calibrate_min_motor_speed(-MOTOR_POLARITY);
 	if(temp_motor_speed_min > motor_speed_min){
 		motor_speed_min = temp_motor_speed_min;
-	}*/
+	}
 	
-	
+	//float sMotor = vel_max /(motor_speed_max - motor_speed_min);
+	return 1;
 }
 
+int16_t motor_get_speed_range(void){
+	return (motor_speed_max - motor_speed_min);
+}
+
+int16_t motor_get_speed_min(void){
+	return motor_speed_min;
+}
+
+
+int16_t motor_get_speed_max(void){
+	return motor_speed_max;
+}
 
 
 int16_t pos;
@@ -215,7 +211,7 @@ uint8_t motor_calibrate_max_velocity(uint8_t max_motor_speed, int8_t direction){
 }
 
 
-#define MIN_VELOCITY 10
+
 
 
 uint8_t motor_calibrate_min_motor_speed(int8_t direction){
@@ -249,7 +245,7 @@ uint8_t motor_calibrate_min_motor_speed(int8_t direction){
 	}
 	
 	_delay_ms(1000);
-	
+		
 	motor_set_motor_speed(0);
 	
 	

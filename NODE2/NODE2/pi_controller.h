@@ -30,6 +30,7 @@
 
 void pi_controller_update(float vel_ref);
 void pi_controller_init(float Ki_init, float Kp_init, float T_Update_init);
+void pi_controller_update_reference(int8_t controller_input);
 //------------------------------------------//
 //	INTERRUPTS								//
 //------------------------------------------//

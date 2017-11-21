@@ -41,14 +41,15 @@ int16_t encoder_read(void);
 void motor_set_motor_speed(uint8_t motor_speed);
 void encoder_reset(void);
 int16_t twos_compliment_decode(uint8_t msb, uint8_t lsb);
-void motor_calibrate(uint8_t motor_speed);
+float motor_calibrate(uint8_t motor_speed);
 int16_t motor_goto_end(uint8_t motor_speed, int8_t direction);
 int16_t motor_get_position();
 int16_t motor_get_velocity();
 uint8_t motor_calibrate_max_velocity(uint8_t motor_speed, int8_t direction);
 uint8_t motor_calibrate_min_motor_speed(int8_t direction);
-
+int16_t motor_get_speed_range(void);
 uint16_t e_r(void);
-
+int16_t motor_get_speed_min(void);
+int16_t motor_get_speed_max(void);
 
 #endif /* MOTOR_H_ */

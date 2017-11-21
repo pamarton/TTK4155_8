@@ -74,7 +74,7 @@ int main(void)
 			
 			controller = read_control_input('X');
 			
-			if(controller != (int8_t)data[0]){
+			if(controller != (int8_t)data[0] || 1){
 				data[0] = controller;
 				printf("Sending Can: \t%i\t%i\t%i\t%i\t%i\t%i\t%i\t%i\n", (int8_t)data[0], (int8_t)data[1], (int8_t)data[2], (int8_t)data[3], (int8_t)data[4], (int8_t)data[5], (int8_t)data[6], (int8_t)data[7]);
 				CAN_message_send(data,0);

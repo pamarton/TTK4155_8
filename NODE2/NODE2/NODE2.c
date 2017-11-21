@@ -28,10 +28,15 @@ int main(void){
 	init_all();
 
 	int8_t motor_speed = 0;
+	
+	
+	
+	
 	int8_t direction = 0.1;
-
 	while(1){
 		if(CAN_data_receive()){
+			pi_controller_update_reference(CAN_message_receive()->data[0]);
+			/*
 			//printf("CAN value = %i", CAN_message_receive()->data[0]);
 			motor_speed =  (int8_t)  CAN_message_receive()->data[0];
 			
@@ -49,6 +54,7 @@ int main(void){
 
 			printf("motor_speed: %i\n", motor_speed);
 			//servo_set(CAN_message_receive()->data[0]);
+			*/
 		}
 		
 		//printf("A");
@@ -57,10 +63,10 @@ int main(void){
 		//printf("IR 	%i\n", ADCH);
 		//encoder_read();
 		
-		double smotor_speed = 0.2;
+		//double smotor_speed = 0.2;
 		
-		pi_controller_update(smotor_speed * motor_speed);
-		motor_set_direction(direction);
+		//pi_controller_update(smotor_speed * motor_speed);
+		//motor_set_direction(direction);
 		
 	}
     return 0;
@@ -77,6 +83,7 @@ void init_all(void){
 	printf("TWI initialized\n");
 	//Motor is being initialized by PI-Controller.
 	//motor_init();
+	//motor_calibrate(100);
 	//printf("Motor initialized\n");
 	servo_init();
 	printf("Servo initialized\n");

@@ -23,9 +23,8 @@ void setup_menu(menu * new_menu, menu * ptr_sib_down, menu * ptr_parent, menu * 
 
 #if HIGHSCORE_ENABLE 
 const char mainmenu_entry_highscore[] PROGMEM = "Highscore";
-const char highscore_entry_0[] PROGMEM = "Highscore:";
-const char highscore_entry_1[] PROGMEM = "2nd";
-const char highscore_entry_2[] PROGMEM = "3rd";
+const char highscore_entry_0[] PROGMEM = "Squash-sim";
+const char highscore_entry_1[] PROGMEM = "Flappy Pixel";
 #endif
 #if TOTAL_GAMES>0
 const char mainmenu_entry_games[] PROGMEM = "Games";
@@ -114,8 +113,28 @@ menu *game_ptr_list[TOTAL_OPTION] = {
 menu mainmenu_debug;
 menu mainmenu_options;
 #if HIGHSCORE_ENABLE
+
 menu mainmenu_highscore;
+menu highscore_0;
+menu highscore_1;
+
+menu *highscore_list[TOTAL_GAMES] = {
+	&highscore_0,
+	&highscore_1
+};
+const char *highscore_entry_list[TOTAL_GAMES] = {
+	highscore_entry_0,
+	highscore_entry_1
+};
+menu *highscore_ptr_list[TOTAL_MAINMENU] = {
+	NULL,
+	NULL
+};
+
 #endif
+
+
+
 menu mainmenu_options;
 menu mainmenu_start;
 #if TOTAL_GAMES > 0
@@ -149,7 +168,7 @@ menu *mainmenu_ptr_list[TOTAL_MAINMENU] = {
 	&game_0,//GAME POINTER
 	#endif
 	#if HIGHSCORE_ENABLE
-	NULL,//HIGHSCORE POINTER
+	&highscore_0,
 	#endif
 	&option_0,
 	&debug_0
@@ -174,6 +193,12 @@ void initialize_menu(void){
 	for (uint8_t g = 0; g < TOTAL_GAMES; g++)
 	{
 		setup_menu(game_list[g],game_list[(g+1)%TOTAL_GAMES],mainmenu_list[0],game_ptr_list[g],TOTAL_GAMES,game_entry_list[g]);
+	}
+	#endif
+	#if HIGHSCORE_ENABLE
+	for (uint8_t h = 0; h < TOTAL_GAMES; h++)
+	{
+		setup_menu(highscore_list[h],highscore_list[(h+1)%TOTAL_GAMES],mainmenu_list[0],highscore_ptr_list[h],TOTAL_GAMES,highscore_entry_list[h]);
 	}
 	#endif
 	
@@ -275,7 +300,24 @@ void menu_function_selected(void){
 	#if FLAPPY == 1
 	else if(current_selected == &game_0){
 		flappy_main();
-		printf("FLAPPYT");
+	}
+	#endif
+	
+	#if HIGHSCORE_ENABLE
+	else if(current_selected == &highscore_0){
+		print_highscore(SCOREBOARD_MAIN_GAME);
+		while (!(check_flag_left()||check_flag_right()))
+		{
+			
+		}
+	}
+	
+	else if(current_selected == &highscore_1){
+		print_highscore(SCOREBOARD_FLAPPY_BIRD);
+		while (!(check_flag_left()||check_flag_right()))
+		{
+			
+		}
 	}
 	#endif
 }
@@ -299,7 +341,6 @@ void menu_set_contrast(void){
 		write_c(0x81);
 		write_c(readADC(3)/2);
 	}
-	
 }
 
 
