@@ -23,7 +23,7 @@ int16_t motor_init(void){
 	
 	encoder_reset();
 	
-	int16_t pos_max = motor_calibrate(150);
+	int16_t pos_max = motor_calibrate(100);
 	return pos_max;
 }
 
@@ -121,10 +121,11 @@ float  motor_calibrate(uint8_t motor_speed){
 	motor_goto_end(motor_speed,-MOTOR_POLARITY);
 	encoder_reset();
 	pos_max = motor_goto_end(motor_speed,MOTOR_POLARITY);
+	motor_goto_end(motor_speed,-MOTOR_POLARITY);
 	
 	//end_pos1 = motor_goto_end(motor_speed,-MOTOR_POLARITY);
 	printf("E_min:%i\tE_Max: %i\n",pos_min, pos_max);
-	
+	/*
 	//Move sledge back and measure motor_speed.
 	motor_speed_max = motor_speed;
 	
@@ -137,6 +138,7 @@ float  motor_calibrate(uint8_t motor_speed){
 	}
 	
 	//float sMotor = vel_max /(motor_speed_max - motor_speed_min);
+	*/
 	return pos_max;
 }
 
@@ -164,7 +166,7 @@ int16_t motor_goto_end(uint8_t motor_speed, int8_t direction){
 	uint8_t time_counter = 0;
 	int16_t encoder_val = 0;
 	
-	while(time_counter < 2/T_UPDATE){
+	while(time_counter < 2*TIMER_FREQ){
 		encoder_val = encoder_read();
 		time_counter += timer_check_flag();
 		if(encoder_val != pos){

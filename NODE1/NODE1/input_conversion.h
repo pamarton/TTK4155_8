@@ -22,9 +22,16 @@
 
 #define SIGNAL_MAX 0xff //255 in decimal
 #define SIGNAL_MIN 0x00 //0 in decimal
-#define RANGE_MAX 100
-#define RANGE_MIN -RANGE_MAX
+#define JOYSTICK_MAX 100
+#define SLIDER_MAX 100
+#define SLIDER_MIN 0
+#define JOYSTICK_MIN -JOYSTICK_MAX
 #define RESOLUTION 10
+
+#define ADC_CHANNEL_X 1		// Joystick LEFT/RIGHT
+#define ADC_CHANNEL_Y 2		// Joystick UP/DOWN 
+#define ADC_CHANNEL_L 3		// left slider
+#define ADC_CHANNEL_R 4		// right slider
 
 //------------------------------------------//
 //	FUNCTIONS								//

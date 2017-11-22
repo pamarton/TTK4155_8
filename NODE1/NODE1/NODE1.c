@@ -16,75 +16,15 @@
 
 void init_all(void);
 void bootscreen(void);
-#include "game_2048.h"
+#include "game.h"
 #include "scoreboard.h"
 
 
 #include "../../common_library/uart.h" //remove
 int main(void)
 {
-	//scoreboard_init();
 	init_all();
-	//http: //www.dreamdealer.nl/tutorials/connecting_a_1602a_lcd_display_and_a_light_sensor_to_arduino_uno.html
-	//sram_update_oled();
-	
-	//scoreboard_command(1);
-	//_delay_ms(1000);
-	
-	
-	
-	//timer_delay(500);
-	
-	//sram_init();
-	//main_2048();
-	
-	
-	uint8_t temp[8] = {1,2,3,4,5,6,7,8};
-	uint8_t *data = temp;
-	
-	
-	/* HIGHSCORE, LEAVE AS IS!
-	char a[16];
-	for (uint8_t b = 0; b < 8; b++)
-	{
-		printf("S0R");
-		printf("%c",'0'+b);
-		sram_goto_line(b);
-		for (unsigned int i = 0; i< 12;i++)
-		{
-			a[i] = recieve_UART();
-		}
-		sram_write_string(a);
-	}
-	while (1)
-	{
-		sram_update_oled();
-	}*/
-	
-	
-	
-	
-	
-	
-	
-    uint8_t sendCAN = 1;
-	int8_t controller = 0;
-    while(1){
-	    if(sendCAN){
-			
-			controller = read_control_input('X');
-			
-			if(controller != (int8_t)data[0] || 1){
-				data[0] = controller;
-				printf("Sending Can: \t%i\t%i\t%i\t%i\t%i\t%i\t%i\t%i\n", (int8_t)data[0], (int8_t)data[1], (int8_t)data[2], (int8_t)data[3], (int8_t)data[4], (int8_t)data[5], (int8_t)data[6], (int8_t)data[7]);
-				CAN_message_send(data,0);
-			}
-	    }else if(~sendCAN){
-			//if (CAN_data_receive())
-			//{
-			//	
-			//}		    
-	    }
+	while(1){
 		menu_update();
     }
     
@@ -96,12 +36,13 @@ void init_all(void){
 	#if UART_ENABLE
 	printf("LOADING g17_%s %s %s\nINITIALIZING...\n\nUART successfully initialized\n\n", VERSION,__DATE__,__TIME__);
 	#endif
-	BIT_ON(MCUCR,SRE); //SET THIS IN SOME INITALIZE FUNBCTION
-	BIT_ON(SFIOR,XMM2);//HVORFOR GJORDE DE DETTE I OLED?
+	BIT_ON(MCUCR,SRE);
+	BIT_ON(SFIOR,XMM2);
 
 	oled_ini();
 	sram_init();
 	bootscreen();
+	
 	initialize_menu();
 	
 	initialize_control_input();
@@ -186,5 +127,8 @@ void bootscreen(void){
 	sram_draw_line(x,y);
 	sram_draw_line(x+15,y-60);//end of number
 	
+	sram_update_oled();
+	_delay_ms(1000);
+	sram_init();
 	sram_update_oled();
 }

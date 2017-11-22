@@ -85,10 +85,15 @@
 #define CAN_GAME_PARAMS_ID 10
 #define CAN_GAME_CONTROL_ID 20
 #define CAN_GAME_SCORE_ID 30
-#define CAN_GAME_SCORE_LENGTH 3
+#define CAN_GAME_SCORE_LENGTH 2
+#define CAN_GAME_CONTROL_LENGTH 7
+#define CAN_GAME_PARAMS_LENGTH 7
 //------------------------------------------//
 //	DEFINITIONS FOR THE GAMES					//
 //------------------------------------------//
+
+#define CONTROLLER_TYPE_JOYSTICK_ONLY 0
+#define CONTROLLER_TYPE_SLIDER 1
 
 #if NODE == 1
 #define GAME_2048 1

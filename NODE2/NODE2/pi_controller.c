@@ -43,7 +43,7 @@ void pi_controller_update(float rel_pos_ref){
 		pos_meas = encoder_read();
 		pos_err = pos_ref - pos_meas;
 		pos_errSum  += pos_err;
-		u = Kp*pos_err + T_Update*Ki*pos_errSum;
+		u = Kp*pos_err + Ki*pos_errSum/TIMER_FREQ;
 	}
 	motor_set_motor_speed((int16_t)u);
 }

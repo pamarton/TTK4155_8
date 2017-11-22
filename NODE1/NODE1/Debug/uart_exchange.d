@@ -21,7 +21,7 @@ uart_exchange.d uart_exchange.o: .././uart_exchange.c \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\util\delay.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\util\delay_basic.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-gnu-toolchain\avr\include\math.h \
- .././uart.h .././button_interrupts.h .././../../common_library/i_o.h
+ .././uart.h .././buttons.h .././../../common_library/i_o.h
 
 .././uart_exchange.h:
 
@@ -79,6 +79,6 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-g
 
 .././uart.h:
 
-.././button_interrupts.h:
+.././buttons.h:
 
 .././../../common_library/i_o.h:

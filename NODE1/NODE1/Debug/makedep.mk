@@ -14,9 +14,11 @@
 
 adc.c
 
-button_interrupts.c
+buttons.c
 
 flappy_pixel.c
+
+game.c
 
 game_2048.c
 

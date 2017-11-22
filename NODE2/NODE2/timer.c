@@ -8,9 +8,9 @@
 #include "timer.h"
 
 uint8_t update_flag;
-uint16_t score_count;
+uint64_t n_period;
 
-void initialize_timer(float T_Update){
+void initialize_timer(uint16_t timer_freq){
 	
 	//Enable interrupt. When timer is the same as OCR4A it sends an interrupt.
 	TIMSK4 |= (1<<OCIE4A);
@@ -36,13 +36,14 @@ void initialize_timer(float T_Update){
 	#endif
 
 	// Set counter limit.
-	OCR4A = (F_CPU/(TIMER_PRESCALER))*T_Update - 1;
+	OCR4A = (F_CPU/(TIMER_PRESCALER))/TIMER_FREQ - 1;
 	update_flag = 0;
+	n_period = 0;
 }
 
 ISR(TIMER4_COMPA_vect){//interrupt when Timer_0 is done, resets itself
 	update_flag = 1;
-	score_count++;
+	n_period++;
 	//printf("INT");
 	//TIFR4 &= ~(1<<OCF1A);
 }
@@ -51,6 +52,18 @@ uint8_t timer_check_flag(void){
 	if (update_flag)
 	{
 		update_flag = 0;
+		return 1;
+	}
+	return 0;
+}
+
+uint16_t timestamp(uint16_t wait_ms){
+	return (n_period * (1000 / TIMER_FREQ) + wait_ms);
+}
+
+uint8_t check_timestamp(uint16_t stamp){
+	if (timestamp(0) >= stamp)
+	{
 		return 1;
 	}
 	return 0;

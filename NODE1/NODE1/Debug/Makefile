@@ -43,8 +43,9 @@ C_SRCS +=  \
 ../../../common_library/SPI.c \
 ../../../common_library/uart.c \
 ../adc.c \
-../button_interrupts.c \
+../buttons.c \
 ../flappy_pixel.c \
+../game.c \
 ../game_2048.c \
 ../input_conversion.c \
 ../interrupts.c \
@@ -70,8 +71,9 @@ MCP2515_driver.o \
 SPI.o \
 uart.o \
 adc.o \
-button_interrupts.o \
+buttons.o \
 flappy_pixel.o \
+game.o \
 game_2048.o \
 input_conversion.o \
 interrupts.o \
@@ -90,8 +92,9 @@ MCP2515_driver.o \
 SPI.o \
 uart.o \
 adc.o \
-button_interrupts.o \
+buttons.o \
 flappy_pixel.o \
+game.o \
 game_2048.o \
 input_conversion.o \
 interrupts.o \
@@ -110,8 +113,9 @@ MCP2515_driver.d \
 SPI.d \
 uart.d \
 adc.d \
-button_interrupts.d \
+buttons.d \
 flappy_pixel.d \
+game.d \
 game_2048.d \
 input_conversion.d \
 interrupts.d \
@@ -130,8 +134,9 @@ MCP2515_driver.d \
 SPI.d \
 uart.d \
 adc.d \
-button_interrupts.d \
+buttons.d \
 flappy_pixel.d \
+game.d \
 game_2048.d \
 input_conversion.d \
 interrupts.d \
@@ -157,6 +162,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

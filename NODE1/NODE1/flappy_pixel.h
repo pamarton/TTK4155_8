@@ -13,7 +13,7 @@
 
 #include <stdlib.h>//RANDOM FUNCTIOn
 #include "SRAM.h"
-#include "button_interrupts.h"
+#include "buttons.h"
 #include "input_conversion.h"
 #include "timer.h"
 #include "../../common_library/common.h"

@@ -17,14 +17,16 @@
 #include <avr/pgmspace.h>
 #include "../../common_library/uart.h"
 #include "input_conversion.h"
-#include "button_interrupts.h"
+#include "buttons.h"
 #include "timer.h"
 #include "uart_exchange.h"
 #include <stdlib.h>//malloc
+#include "game.h"
 
 #if FLAPPY == 1
 #include	"flappy_pixel.h"
 #endif
+#define SQUASH_SIM 1
 
 //------------------------------------------//
 //	DEFINITIONS								//

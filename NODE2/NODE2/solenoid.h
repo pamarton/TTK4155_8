@@ -23,12 +23,15 @@
 #define SOLENOID_PORT PORTB
 #define SOLENOID_PIN PB7
 #define SOLENOID_DDR DDRB
+#define SOLENOID_REALOAD 500
+
 
 
 void solenoid_init(void);
 void solenoid_disable(void);
 void solenoid_enable(void);
-
+void solenoid_fire(void);
+uint8_t solenoid_reloaded(void);
 
 
 

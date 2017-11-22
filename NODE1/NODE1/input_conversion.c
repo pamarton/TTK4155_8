@@ -42,16 +42,16 @@ void calibrate_joystick(void){
 int read_control_input(char channel){
 	switch(channel){
 		case 'X': 
-			ref_X = signal_to_range(readADC(1), SIGNAL_MIN, SIGNAL_MAX, RANGE_MIN, RANGE_MAX, calibrate_x, ref_X, RESOLUTION); 
+			ref_X = signal_to_range(readADC(ADC_CHANNEL_X), SIGNAL_MIN, SIGNAL_MAX, JOYSTICK_MIN, JOYSTICK_MAX, calibrate_x, ref_X, RESOLUTION); 
 			return ref_X;
 		case 'Y': 
-			ref_Y = signal_to_range(readADC(2), SIGNAL_MIN, SIGNAL_MAX, RANGE_MIN, RANGE_MAX, calibrate_y, ref_Y, RESOLUTION);
+			ref_Y = signal_to_range(readADC(ADC_CHANNEL_Y), SIGNAL_MIN, SIGNAL_MAX, JOYSTICK_MIN, JOYSTICK_MAX, calibrate_y, ref_Y, RESOLUTION);
 			return ref_Y;
 		case 'L':
-		ref_L = signal_to_range(readADC(3), SIGNAL_MIN, SIGNAL_MAX, 0, RANGE_MAX, 0, ref_L, RESOLUTION);
+		ref_L = signal_to_range(readADC(ADC_CHANNEL_L), SIGNAL_MIN, SIGNAL_MAX, SLIDER_MIN, SLIDER_MAX, 0, ref_L, RESOLUTION);
 		return ref_L;
 		case 'R': 
-			ref_R = signal_to_range(readADC(4), SIGNAL_MIN, SIGNAL_MAX, 0, RANGE_MAX, 0, ref_R, RESOLUTION);
+			ref_R = signal_to_range(readADC(ADC_CHANNEL_R), SIGNAL_MIN, SIGNAL_MAX, SLIDER_MIN, SLIDER_MAX, 0, ref_R, RESOLUTION);
 			return ref_R;
 	}
 	return 0;

@@ -34,7 +34,7 @@
 #include "timer.h"
 #include "SRAM.h"
 #include "input_conversion.h"
-#include "button_interrupts.h"
+#include "buttons.h"
 
 void print_highscore(uint8_t game);
 uint8_t decode_hex(char hex);

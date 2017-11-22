@@ -87,13 +87,13 @@ uint8_t CAN_data_receive(void) {
 		receive_flag = 0;
 		uint8_t n = CAN_reception_complete();
 		if (n >= 0){
-			CAN_receive_buffer.id = ((CAN_read(RXBnSIDH + n*0x10)<<3)|(0b11100000 & (CAN_read(RXBnSIDL + n*0x10))>>5));
+			CAN_receive_buffer.id = ((CAN_read(RXBnSIDH + n*0x10)<<3)|(0b00000111 & (CAN_read(RXBnSIDL + n*0x10))>>5));
 			CAN_receive_buffer.length = (CAN_read(RXBnDLC + n*0x10) & 0b00001111);
 			for (uint8_t m = 0; m < CAN_receive_buffer.length; m++){
 				CAN_receive_buffer.data[m] =  CAN_read(RXBnDM + m);
 			}
 		}
-		#if UART_ENABLE
+		#if 1//UART_ENABLE
 			printf("\nRECIVED MESSAGE:");
 			CAN_print(CAN_receive_buffer);
 		#endif

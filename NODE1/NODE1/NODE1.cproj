@@ -165,10 +165,10 @@
     <Compile Include="adc.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="button_interrupts.c">
+    <Compile Include="buttons.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="button_interrupts.h">
+    <Compile Include="buttons.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="flappy_pixel.c">
@@ -178,6 +178,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="font.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="game.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="game.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="game_2048.c">

@@ -33,7 +33,7 @@
 
 #define MOTOR_POLARITY 1
 
-#define T_UPDATE 0.02
+
 
 int16_t motor_init(void);
 void motor_set_direction(int8_t direction);

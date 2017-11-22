@@ -28,8 +28,8 @@ const char highscore_entry_1[] PROGMEM = "Flappy Pixel";
 #endif
 #if TOTAL_GAMES>0
 const char mainmenu_entry_games[] PROGMEM = "Games";
-const char game_entry_0[] PROGMEM = "Flappy Pixel";
-const char game_entry_1[] PROGMEM = "2048";
+const char game_entry_0[] PROGMEM = "Squash-sim";
+const char game_entry_1[] PROGMEM = "Flappy Pixel";
 #endif
 
 const char mainmenu_entry_start[] PROGMEM = "Start";
@@ -75,33 +75,34 @@ menu *option_ptr_list[TOTAL_OPTION] = {
 	NULL,
 };
 #if TOTAL_GAMES > 0
-#if FLAPPY
+#if SQUASH_SIM
 menu game_0;
 #endif
-#if GAME_2048
+#if FLAPPY
 menu game_1;
 #endif
+
 menu *game_list[TOTAL_OPTION] = {
-	#if FLAPPY
+	#if SQUASH_SIM
 	&game_0,
 	#endif
-	#if GAME_2048
+	#if FLAPPY
 	&game_1
 	#endif
 };
 const char *game_entry_list[TOTAL_OPTION] = {
-	#if FLAPPY
+	#if SQUASH_SIM
 	game_entry_0,
 	#endif
-	#if GAME_2048
+	#if FLAPPY
 	game_entry_1
 	#endif
 };
 menu *game_ptr_list[TOTAL_OPTION] = {
-	#if FLAPPY
+	#if SQUASH_SIM
 	NULL,
 	#endif
-	#if GAME_2048
+	#if FLAPPY
 	NULL
 	#endif
 };
@@ -113,20 +114,20 @@ menu *game_ptr_list[TOTAL_OPTION] = {
 menu mainmenu_debug;
 menu mainmenu_options;
 #if HIGHSCORE_ENABLE
-
+#define TOTAL_HIGHSCORE 2
 menu mainmenu_highscore;
 menu highscore_0;
 menu highscore_1;
 
-menu *highscore_list[TOTAL_GAMES] = {
+menu *highscore_list[TOTAL_HIGHSCORE] = {
 	&highscore_0,
 	&highscore_1
 };
-const char *highscore_entry_list[TOTAL_GAMES] = {
+const char *highscore_entry_list[TOTAL_HIGHSCORE] = {
 	highscore_entry_0,
 	highscore_entry_1
 };
-menu *highscore_ptr_list[TOTAL_MAINMENU] = {
+menu *highscore_ptr_list[TOTAL_HIGHSCORE] = {
 	NULL,
 	NULL
 };
@@ -196,9 +197,9 @@ void initialize_menu(void){
 	}
 	#endif
 	#if HIGHSCORE_ENABLE
-	for (uint8_t h = 0; h < TOTAL_GAMES; h++)
+	for (uint8_t h = 0; h < TOTAL_HIGHSCORE; h++)
 	{
-		setup_menu(highscore_list[h],highscore_list[(h+1)%TOTAL_GAMES],mainmenu_list[0],highscore_ptr_list[h],TOTAL_GAMES,highscore_entry_list[h]);
+		setup_menu(highscore_list[h],highscore_list[(h+1)%TOTAL_HIGHSCORE],mainmenu_list[0],highscore_ptr_list[h],TOTAL_HIGHSCORE,highscore_entry_list[h]);
 	}
 	#endif
 	
@@ -298,8 +299,14 @@ void menu_function_selected(void){
 		menu_calibrate_joystick();
 	}
 	#if FLAPPY == 1
-	else if(current_selected == &game_0){
+	else if(current_selected == &game_1){
 		flappy_main();
+	}
+	#endif
+	
+	#if SQUASH_SIM == 1
+	else if(current_selected == &game_0){
+		play_game();
 	}
 	#endif
 	
