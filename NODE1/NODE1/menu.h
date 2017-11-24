@@ -34,7 +34,6 @@
 
 #define NAVIGATION_TRHESHOLD 70
 #define NAVIGATION_COUNTER_MAX 20
-
 //------------------------------------------//
 //	STRUCTS									//
 //------------------------------------------//

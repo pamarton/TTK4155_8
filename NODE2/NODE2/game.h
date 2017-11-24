@@ -27,3 +27,5 @@
 //------------------------------------------//
 uint16_t game_play(void);
 void game_init(uint8_t params[]);
+void game_score_ball(void);
+void game_scoring_init(void);

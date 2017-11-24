@@ -48,8 +48,8 @@ int read_control_input(char channel){
 			ref_Y = signal_to_range(readADC(ADC_CHANNEL_Y), SIGNAL_MIN, SIGNAL_MAX, JOYSTICK_MIN, JOYSTICK_MAX, calibrate_y, ref_Y, RESOLUTION);
 			return ref_Y;
 		case 'L':
-		ref_L = signal_to_range(readADC(ADC_CHANNEL_L), SIGNAL_MIN, SIGNAL_MAX, SLIDER_MIN, SLIDER_MAX, 0, ref_L, RESOLUTION);
-		return ref_L;
+			ref_L = signal_to_range(readADC(ADC_CHANNEL_L), SIGNAL_MIN, SIGNAL_MAX, SLIDER_MIN, SLIDER_MAX, 0, ref_L, RESOLUTION);
+			return ref_L;
 		case 'R': 
 			ref_R = signal_to_range(readADC(ADC_CHANNEL_R), SIGNAL_MIN, SIGNAL_MAX, SLIDER_MIN, SLIDER_MAX, 0, ref_R, RESOLUTION);
 			return ref_R;

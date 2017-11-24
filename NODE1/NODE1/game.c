@@ -24,7 +24,7 @@ uint8_t send_can = 1;
 int16_t temp_reading;
 
 void play_game(void){
-	game_init(CONTROLLER_TYPE_JOYSTICK_ONLY,10);
+	game_init(CONTROLLER_TYPE_SLIDER,10);
 	Game_Over = 0;
 	sram_init();
 	sram_goto_line(0);
@@ -114,6 +114,13 @@ void game_send_data(void){//sends a can message if there is an update
 		data_to_send[5] = temp_reading;
 		send_can = 1;
 	}
+	temp_reading = SLIDER_MAX - read_control_input('R');
+	if (temp_reading != R_slider)
+	{
+		R_slider = temp_reading;
+		data_to_send[6] = temp_reading;
+		send_can = 1;
+	}
 	if (send_can)
 	{
 		CAN_construct_message(CAN_GAME_CONTROL_ID,8);
@@ -138,7 +145,7 @@ void game_init(uint8_t controller_type, uint16_t sensitivity){
 	X_reading = read_control_input('X');
 	Y_reading = read_control_input('Y');
 	L_slider = read_control_input('L');
-	R_slider = read_control_input('R');
+	R_slider = SLIDER_MAX - read_control_input('R');
 	
 	J_btn = joystick_pressed();
 	L_btn = check_flag_left();

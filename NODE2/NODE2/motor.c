@@ -22,9 +22,10 @@ int16_t motor_init(void){
 	MOTOR_PORT |= (1<<EN);
 	
 	encoder_reset();
-	
+	motor_set_motor_speed(0);
 	int16_t pos_max = motor_calibrate(100);
 	return pos_max;
+	
 }
 
 void motor_set_motor_speed(uint8_t motor_speed){
@@ -44,7 +45,9 @@ void motor_set_direction(int8_t direction){
 			//printf("Setting motor direction: %i\n", direction);
 			MOTOR_PORT |=  (1<<DIR);
 			break;
-	}	
+		case 0:
+			break;
+	}
 }
 
 //Toggle RSTN to reset encoder.
@@ -123,22 +126,9 @@ float  motor_calibrate(uint8_t motor_speed){
 	pos_max = motor_goto_end(motor_speed,MOTOR_POLARITY);
 	motor_goto_end(motor_speed,-MOTOR_POLARITY);
 	
-	//end_pos1 = motor_goto_end(motor_speed,-MOTOR_POLARITY);
+	
 	printf("E_min:%i\tE_Max: %i\n",pos_min, pos_max);
-	/*
-	//Move sledge back and measure motor_speed.
-	motor_speed_max = motor_speed;
 	
-	vel_max = motor_calibrate_max_velocity(motor_speed,-MOTOR_POLARITY);
-	motor_speed_min = motor_calibrate_min_motor_speed(MOTOR_POLARITY);
-	motor_goto_end(motor_speed_min,MOTOR_POLARITY);
-	uint8_t temp_motor_speed_min = motor_calibrate_min_motor_speed(-MOTOR_POLARITY);
-	if(temp_motor_speed_min > motor_speed_min){
-		motor_speed_min = temp_motor_speed_min;
-	}
-	
-	//float sMotor = vel_max /(motor_speed_max - motor_speed_min);
-	*/
 	return pos_max;
 }
 

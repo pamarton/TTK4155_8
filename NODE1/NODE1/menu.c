@@ -10,12 +10,9 @@ menu* current_head;
 menu* current_selected;
 
 void setup_menu(menu * new_menu, menu * ptr_sib_down, menu * ptr_parent, menu * ptr_child, int n_sib, PGM_P title){
-	//new_menu->ptr_self = new_menu;
-	//new_menu->ptr_sib_up = ptr_sib_up;
 	new_menu->ptr_sib_down = ptr_sib_down;
 	new_menu->ptr_child = ptr_child;
 	new_menu->ptr_parent = ptr_parent;
-	
 	new_menu->title = title;
 	new_menu->n_sib = n_sib;
 }
@@ -32,17 +29,20 @@ const char game_entry_0[] PROGMEM = "Squash-sim";
 const char game_entry_1[] PROGMEM = "Flappy Pixel";
 #endif
 
-const char mainmenu_entry_start[] PROGMEM = "Start";
-const char mainmenu_entry_debug[] PROGMEM = "Debug";
+#if OPTION_ENABLE
 const char mainmenu_entry_options[] PROGMEM = "Options";
-
 const char option_entry_0[] PROGMEM = "Music";
 const char option_entry_1[] PROGMEM = "Contrast";
+#endif
 
+#if DEBUG_ENABLE
+const char mainmenu_entry_debug[] PROGMEM = "Debug";
 const char debug_entry_0[] PROGMEM = "fit screen";
 const char debug_entry_1[] PROGMEM = "Calibrate";
+#endif
 
-
+//setup debug
+#if DEBUG_ENABLE
 //SETUP OF THE DEBUG
 menu debug_0;
 menu debug_1;
@@ -58,8 +58,10 @@ menu *debug_ptr_list[TOTAL_DEBUG] = {
 	NULL,
 	NULL
 };
+#endif
 
 //SETUP OF THE OPTION
+#if OPTION_ENABLE
 menu option_0;
 menu option_1;
 menu *option_list[TOTAL_OPTION] = {
@@ -74,6 +76,9 @@ menu *option_ptr_list[TOTAL_OPTION] = {
 	NULL,
 	NULL,
 };
+#endif
+
+//setup games
 #if TOTAL_GAMES > 0
 #if SQUASH_SIM
 menu game_0;
@@ -108,11 +113,10 @@ menu *game_ptr_list[TOTAL_OPTION] = {
 };
 #endif
 
-
-
-//SETUP OF THE MAIN MENU (must be done last since it uses the previous constants and pointers
+#if DEBUG_ENABLE
 menu mainmenu_debug;
-menu mainmenu_options;
+#endif
+
 #if HIGHSCORE_ENABLE
 #define TOTAL_HIGHSCORE 2
 menu mainmenu_highscore;
@@ -134,15 +138,14 @@ menu *highscore_ptr_list[TOTAL_HIGHSCORE] = {
 
 #endif
 
-
-
+#if OPTION_ENABLE
 menu mainmenu_options;
-menu mainmenu_start;
+#endif
+
 #if TOTAL_GAMES > 0
 menu mainmenu_games;
 #endif
 menu *mainmenu_list[TOTAL_MAINMENU] = {
-	&mainmenu_start,
 	#if TOTAL_GAMES > 0
 	&mainmenu_games,
 	#endif
@@ -150,10 +153,11 @@ menu *mainmenu_list[TOTAL_MAINMENU] = {
 	&mainmenu_highscore,
 	#endif
 	&mainmenu_options,
+	#if DEBUG_ENABLE
 	&mainmenu_debug
+	#endif
 };
 const char *mainmenu_entry_list[TOTAL_MAINMENU] = {
-	mainmenu_entry_start,
 	#if TOTAL_GAMES > 0
 	mainmenu_entry_games,
 	#endif
@@ -161,10 +165,11 @@ const char *mainmenu_entry_list[TOTAL_MAINMENU] = {
 	mainmenu_entry_highscore,
 	#endif
 	mainmenu_entry_options,
+	#if DEBUG_ENABLE
 	mainmenu_entry_debug
+	#endif
 };
 menu *mainmenu_ptr_list[TOTAL_MAINMENU] = {
-	NULL,//START GAME POINTER
 	#if TOTAL_GAMES > 0
 	&game_0,//GAME POINTER
 	#endif
@@ -172,7 +177,9 @@ menu *mainmenu_ptr_list[TOTAL_MAINMENU] = {
 	&highscore_0,
 	#endif
 	&option_0,
+	#if DEBUG_ENABLE
 	&debug_0
+	#endif
 };
 
 char temp[16];
@@ -182,14 +189,18 @@ void initialize_menu(void){
 	{
 		setup_menu(mainmenu_list[m],mainmenu_list[(m+1)%TOTAL_MAINMENU],NULL,mainmenu_ptr_list[m],TOTAL_MAINMENU,mainmenu_entry_list[m]);
 	}
+	#if OPTION_ENABLE
 	for (uint8_t o = 0; o < TOTAL_OPTION; o++)
 	{
 		setup_menu(option_list[o],option_list[(o+1)%TOTAL_OPTION],mainmenu_list[0],option_ptr_list[o],TOTAL_OPTION,option_entry_list[o]);
 	}
+	#endif
+	#if DEBUG_ENABLE
 	for (uint8_t d = 0; d < TOTAL_DEBUG; d++)
 	{
 		setup_menu(debug_list[d],debug_list[(d+1)%TOTAL_DEBUG],mainmenu_list[0],debug_ptr_list[d],TOTAL_DEBUG,debug_entry_list[d]);
 	}
+	#endif
 	#if TOTAL_GAMES > 0
 	for (uint8_t g = 0; g < TOTAL_GAMES; g++)
 	{
@@ -204,10 +215,10 @@ void initialize_menu(void){
 	#endif
 	
 	// current_head is the top entry of the current menu.
-	current_head = &mainmenu_start;
+	current_head = &mainmenu_games;
 	
 	// current_selected is the selected menu entry of the current menu.
-	current_selected = &mainmenu_start;
+	current_selected = &mainmenu_games;
 	
 }
 
@@ -247,17 +258,6 @@ void menu_update(void){
 
 
 int navigate_menu(void){
-	/*int joystick_reading_y = read_control_input('Y');
-	
-	if(joystick_reading_y > NAVIGATION_TRHESHOLD){
-		for(int i = 0; i < current_selected->n_sib-1; i++){
-			current_selected = current_selected->ptr_sib_down;
-		}
-	}
-	else if (joystick_reading_y < -NAVIGATION_TRHESHOLD){
-		current_selected = current_selected->ptr_sib_down;
-	}
-	*/
 	int joystick_reading = read_control_input('Y');
 	
 	// Navigate up.
@@ -295,9 +295,12 @@ int navigate_menu(void){
 void menu_function_selected(void){
 	if(current_selected == &option_1){
 		menu_set_contrast();
-	}else if(current_selected == &debug_1){
+	}
+	#if DEBUG_ENABLE
+	else if(current_selected == &debug_1){
 		menu_calibrate_joystick();
 	}
+	#endif
 	#if FLAPPY == 1
 	else if(current_selected == &game_1){
 		flappy_main();

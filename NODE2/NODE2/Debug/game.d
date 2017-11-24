@@ -24,7 +24,8 @@ game.d game.o: .././game.c .././game.h .././../../common_library/common.h \
  .././../../common_library/MCP2515_driver.h \
  .././../../common_library/SPI.h .././../../common_library/uart.h \
  .././../../common_library/i_o.h .././pi_controller.h .././motor.h \
- .././timer.h
+ .././timer.h .././IRsensor.h .././solenoid.h .././servo_driver.h \
+ .././pwm.h
 
 .././game.h:
 
@@ -89,3 +90,11 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1061\avr8-g
 .././motor.h:
 
 .././timer.h:
+
+.././IRsensor.h:
+
+.././solenoid.h:
+
+.././servo_driver.h:
+
+.././pwm.h:

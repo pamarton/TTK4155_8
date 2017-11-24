@@ -27,6 +27,7 @@ void solenoid_fire(void){
 	if (solenoid_reloaded())
 	{
 		solenoid_enable();
+		
 		_delay_ms(20);
 		solenoid_disable();
 		solenoid_loaded = timestamp(SOLENOID_REALOAD);
@@ -36,8 +37,11 @@ void solenoid_fire(void){
 uint8_t solenoid_reloaded(void){
 	if (check_timestamp(solenoid_loaded))
 	{
+		printf("SHOOTING!!!!!!!!!!!!!!");
 		return 1;
 	}
+	
+	printf("RELOAD\n");
 	return 0;
 }
 

@@ -35,13 +35,13 @@ void CAN_initialize(void){
 	CAN_interrupt_setup();
 	
 	#if UART_ENABLE
-		printf("MCP_CANSTAT: %i\n", MCP2515_read(MCP_CANSTAT));//comment out later
+		printf("MCP_CANSTAT: %i\n", MCP2515_read(MCP_CANSTAT));  //comment out later
 		printf("CAN initialized.\n");
 	#endif
 }
 
-CAN_message_t* CAN_message_receive(void){						// What does this step do //NOT NECCECARY, but if we want to reference the recieved data from another part of the program this is necceccary
-	return &CAN_receive_buffer;						// What does this step do
+CAN_message_t* CAN_message_receive(void){						//NOT NECCECARY, but if we want to reference the recieved data from another part of the program this is necceccary
+	return &CAN_receive_buffer;									
 }
 	
 void CAN_construct_message(int id, uint8_t length){
@@ -61,8 +61,8 @@ void CAN_message_send(uint8_t *data,uint8_t TXn){
 }
 
 void CAN_send_byte(CAN_message_t* message,uint8_t TXn){
-	MCP2515_write(MCP_TXBnSIDH+TXn*0x10,message->id>>3);		//8 most significant bits of the message ID
-	MCP2515_write(MCP_TXBnSIDL+TXn*0x10,message->id<<5);		//3 least significant bits of the message ID
+	MCP2515_write(MCP_TXBnSIDH+TXn*0x10,message->id>>3);					//8 most significant bits of the message ID
+	MCP2515_write(MCP_TXBnSIDL+TXn*0x10,message->id<<5);					//3 least significant bits of the message ID
 	MCP2515_write(MCP_TXBnDLC+TXn*0x10,(0b00001111)&(message->length));		//Message length
 		
 	for (uint8_t i = 0; i < message->length;i++){
@@ -93,7 +93,7 @@ uint8_t CAN_data_receive(void) {
 				CAN_receive_buffer.data[m] =  CAN_read(RXBnDM + m);
 			}
 		}
-		#if 1//UART_ENABLE
+		#if UART_ENABLE
 			printf("\nRECIVED MESSAGE:");
 			CAN_print(CAN_receive_buffer);
 		#endif
@@ -121,6 +121,7 @@ ISR(INT4_vect){//interrupt incoming message
 
 	
 void CAN_interrupt_setup(void){
+	//Disable global interrupt.
 	cli();
 	#if NODE == 1
 		//Extended MCU Control Register bit 0 ....turned off?
@@ -138,9 +139,9 @@ void CAN_interrupt_setup(void){
 	
 		// Enable INT4 (Compare sec 15.2.3 of Atmega2560 data sheet).
 		EIMSK |= (1<<INT4);
-
-		//Enable global interrupt.
+		
 	#endif
+	//Enable global interrupt.
 	sei();
 }
 
